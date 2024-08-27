@@ -1,0 +1,71 @@
+<app-header title="RegistrApp"></app-header>
+
+<ion-content [fullscreen]="true">
+
+  <div class="d-flex-center">
+    <form [formGroup]="registerForm" class="auth-form" (ngSubmit)="onSubmit()" (keypress.enter)="onSubmit()">
+
+      <app-logo></app-logo>
+      <app-custom-inputs 
+        icon="person-outline"
+        [control]="registerForm.controls.name"
+        type="text"
+        label="Nombres y Apellidos"
+      ></app-custom-inputs>
+
+      <app-custom-inputs
+        icon="card-outline"
+        [control]=" registerForm.controls.rut"
+        type="text"
+        label="RUT sin puntos ni guión"
+      ></app-custom-inputs>
+
+      <app-custom-inputs
+        icon="call-outline"
+        [control]="registerForm.controls.phone"
+        type="number"
+        label="Número de Teléfono"
+      ></app-custom-inputs>
+      
+      <app-custom-inputs 
+        icon="mail-outline"
+        autocomplete="email"
+        [control]="registerForm.controls.email"
+        type="email"
+        label="Correo electrónico"
+      ></app-custom-inputs>
+
+      <app-custom-inputs
+        icon="lock-closed-outline"
+        [control]="registerForm.controls.password"
+        type="password"
+        label="Contraseña"
+      ></app-custom-inputs>
+      
+      <app-custom-inputs
+        icon="lock-closed-outline"
+        [control]="registerForm.controls.confirmPassword"
+        type="password"
+        label="Confirmar contraseña"
+      ></app-custom-inputs>
+
+      <div class="validators" *ngIf="registerForm.controls.email.errors && registerForm.controls.email.touched">
+        <div *ngIf="registerForm.controls.email.errors?.['required']">El correo es requerido</div>
+        <div *ngIf="registerForm.controls.email.errors?.['email']">Ingrese un correo válido</div>
+      </div>
+
+      <div class="validators" *ngIf="registerForm.controls.password.errors && registerForm.controls.password.touched">
+        <div *ngIf="registerForm.controls.password.errors?.['required']">La contraseña es requerida</div>
+      </div>
+
+      <ion-button color="secondary" expand="block" mode="ios" class="submit" type="submit" [disabled]="registerForm.invalid">
+        Crear cuenta
+        <ion-icon slot="end" name="person-add-outline"></ion-icon>
+      </ion-button>
+
+    </form>
+
+  </div>
+
+
+</ion-content>
