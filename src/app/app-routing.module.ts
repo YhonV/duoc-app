@@ -13,6 +13,10 @@ const routes: Routes = [
   },  {
     path: 'registro',
     loadChildren: () => import('./registro/registro.module').then( m => m.RegistroPageModule)
+  },
+  {
+    path: 'forgotten-password',
+    loadChildren: () => import('./pages/forgotten-password/forgotten-password.module').then( m => m.ForgottenPasswordPageModule)
   }
 
 ];

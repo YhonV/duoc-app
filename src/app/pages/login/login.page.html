@@ -21,7 +21,7 @@
       </div>
 
       <app-custom-inputs 
-        icon="lock-closed-outline"
+        icon="key-outline"
         [control]="form.controls.password"
         type="password"
         label="Contraseña"
@@ -35,19 +35,24 @@
         Ingresar
         <ion-icon slot="end" name="log-in-outline"></ion-icon>
       </ion-button>
-
-    </form>
+    </form>  
   </div>
-  <div class="d-flex-center">
-    <h5>¿No tienes cuenta?</h5>
-  </div> 
-    <div class="d-flex-center">
-      <ion-button color="secondary" mode="ios" class="submit" routerLink="/registro">
-        Regístrate
-        <ion-icon slot="end" name="person-add-outline"></ion-icon>
-      </ion-button>
+
+  <div class="additional-options">
+    <a class="forgot-password-link" routerLink="/forgotten-password">
+      <ion-icon name="help-circle-outline"></ion-icon>
+      Olvidé mi contraseña
+    </a>
+
+    <div class="register-section">
+      <p class="no-account">¿No tienes cuenta?</p>
+      <ion-button
+        color="secondary"
+        icon="person-add-outline"
+        routerLink="/registro"
+      >Regístrate</ion-button>
     </div>
-  
+  </div>
 
   
 
