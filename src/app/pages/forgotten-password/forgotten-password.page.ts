@@ -17,4 +17,10 @@ export class ForgottenPasswordPage implements OnInit {
   ngOnInit() {
   }
 
+  validarEmail() {
+    if (this.forgottenForm.get('email')?.invalid) {
+      console.log('hola') ;
+    }
+    console.log('hola1234') ;
+  }
 }
