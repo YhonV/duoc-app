@@ -1,0 +1,19 @@
+.modal-content {
+    text-align: center;
+    img {
+      margin-top: 100px;
+      width: 200px;
+      height: 200px;
+    }
+    h2 {
+      margin-top: 50px;
+    }
+  }
+
+  ion-modal {
+    ion-back-button {
+      display: none;
+    }
+  }
+  
+  

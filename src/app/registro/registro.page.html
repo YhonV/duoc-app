@@ -49,16 +49,13 @@
         label="Confirmar contraseña"
       ></app-custom-inputs>
 
-      <div class="validators" *ngIf="registerForm.controls.email.errors && registerForm.controls.email.touched">
-        <div *ngIf="registerForm.controls.email.errors?.['required']">El correo es requerido</div>
-        <div *ngIf="registerForm.controls.email.errors?.['email']">Ingrese un correo válido</div>
-      </div>
+      <div class="validators" *ngIf="registerForm.controls.email.errors?.['email']">Ingrese un correo válido</div>
+      <div class="validators" *ngIf="registerForm.controls.password.errors?.['minlength']">La contraseña debe tener al menos 6 caracteres</div>
+      <div class="validators" *ngIf="registerForm.errors?.['mismatch']">Las contraseñas no coinciden</div>
+        
+      
 
-      <div class="validators" *ngIf="registerForm.controls.password.errors && registerForm.controls.password.touched">
-        <div *ngIf="registerForm.controls.password.errors?.['required']">La contraseña es requerida</div>
-      </div>
-
-      <ion-button color="secondary" expand="block" mode="ios" class="submit" type="submit" [disabled]="registerForm.invalid">
+      <ion-button  (click)="crearCuenta()" color="secondary" expand="block" mode="ios" class="submit" type="submit" [disabled]="registerForm.invalid">
         Crear cuenta
         <ion-icon slot="end" name="person-add-outline"></ion-icon>
       </ion-button>
