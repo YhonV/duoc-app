@@ -1,10 +1,15 @@
-<div class="modal-content" @fadeInOut>
-  <img src="assets/icon/check.png" alt="Ticket" />
-  <h2>¡Cuenta creada con éxito!</h2>
-  <br>
-  <h5>Serás redirigido a la página de inicio de sesión en unos segundos...</h5>
-</div>
-
-
-
-
+<ion-content class="ion-padding">
+  <ion-modal #modal trigger="open-modal" [enterAnimation]="enterAnimation" [leaveAnimation]="leaveAnimation" [cssClass]="'custom-modal'" (willPresent)="onWillPresent()">
+    <ng-template>
+      <div class="modal-content">
+        <ion-button fill="clear" class="close-button" (click)="modal.dismiss()">
+          <ion-icon name="close-outline"></ion-icon>
+        </ion-button>
+        <img [src]="image" alt="Icon" class="icon-img">
+        <h2>{{title}}</h2>
+        <p>{{content}}</p>
+        <p>{{description}}</p>
+      </div>
+    </ng-template>
+  </ion-modal>
+</ion-content>

@@ -1,68 +1,78 @@
 <app-header title="RegistrApp" [showBackButton]="true"></app-header>
 
 <ion-content [fullscreen]="true">
-
   <div class="d-flex-center">
-    <form [formGroup]="registerForm" class="auth-form" (ngSubmit)="onSubmit()" (keypress.enter)="onSubmit()">
-
+    <form [formGroup]="registerForm" class="auth-form" (ngSubmit)="onSubmit()">
       <app-logo></app-logo>
+
       <app-custom-inputs 
         icon="person-outline"
-        [control]="registerForm.controls.name"
+        [control]="registerForm.controls['name']"
         type="text"
         label="Nombres y Apellidos"
       ></app-custom-inputs>
 
       <app-custom-inputs
         icon="card-outline"
-        [control]=" registerForm.controls.rut"
+        [control]="registerForm.controls['rut']"
         type="text"
         label="RUT sin puntos ni guión"
       ></app-custom-inputs>
 
       <app-custom-inputs
         icon="call-outline"
-        [control]="registerForm.controls.phone"
+        [control]="registerForm.controls['phone']"
         type="number"
         label="Número de Teléfono"
       ></app-custom-inputs>
-      
+
       <app-custom-inputs 
         icon="mail-outline"
         autocomplete="email"
-        [control]="registerForm.controls.email"
+        [control]="registerForm.controls['email']"
         type="email"
         label="Correo electrónico"
       ></app-custom-inputs>
 
       <app-custom-inputs
         icon="bag-outline"
-        [control]="registerForm.controls.password"
+        [control]="registerForm.controls['password']"
         type="password"
         label="Contraseña"
       ></app-custom-inputs>
-      
+
       <app-custom-inputs
         icon="bag-check-outline"
-        [control]="registerForm.controls.confirmPassword"
+        [control]="registerForm.controls['confirmPassword']"
         type="password"
         label="Confirmar contraseña"
       ></app-custom-inputs>
 
-      <div class="validators" *ngIf="registerForm.controls.email.errors?.['email']">Ingrese un correo válido</div>
-      <div class="validators" *ngIf="registerForm.controls.password.errors?.['minlength']">La contraseña debe tener al menos 6 caracteres</div>
+      <div class="validators" *ngIf="registerForm.controls['email'].errors?.['email']">Ingrese un correo válido</div>
+      <div class="validators" *ngIf="registerForm.controls['password'].errors?.['minlength']">La contraseña debe tener al menos 6 caracteres</div>
       <div class="validators" *ngIf="registerForm.errors?.['mismatch']">Las contraseñas no coinciden</div>
-        
-      
 
-      <ion-button  (click)="crearCuenta()" color="secondary" expand="block" mode="ios" class="submit" type="submit" [disabled]="registerForm.invalid">
-        Crear cuenta
-        <ion-icon slot="end" name="person-add-outline"></ion-icon>
-      </ion-button>
-
+      <ion-button  
+      color="secondary" 
+      expand="block" 
+      mode="ios" 
+      class="submit" 
+      type="submit" 
+      [disabled]="registerForm.invalid"
+      id="open-modal">
+      Crear cuenta
+      <ion-icon slot="end" name="person-add-outline"></ion-icon>
+    </ion-button>
     </form>
-
   </div>
 
-
+  <app-modal
+  [trigger]="'open-modal'"
+  [title]="title"
+  [content]="content"
+  [image]="image"
+  [description]="description"
+  [autoClose]="autoClose"
+  [redirectTo]="redirectTo"
+></app-modal>
 </ion-content>

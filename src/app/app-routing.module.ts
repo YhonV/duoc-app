@@ -10,14 +10,19 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
-  },  {
+  },
+  {
     path: 'registro',
-    loadChildren: () => import('./registro/registro.module').then( m => m.RegistroPageModule)
+    loadChildren: () => import('./pages/registro/registro.module').then( m => m.RegistroPageModule)
   },
   {
     path: 'forgotten-password',
     loadChildren: () => import('./pages/forgotten-password/forgotten-password.module').then( m => m.ForgottenPasswordPageModule)
+  },  {
+    path: 'assistance',
+    loadChildren: () => import('./pages/assistance/assistance.module').then( m => m.AssistancePageModule)
   }
+
 
 ];
 
