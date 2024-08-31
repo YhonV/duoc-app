@@ -1,0 +1,25 @@
+<ion-grid class="custom-table">
+  <ion-row class="header-row">
+    <ion-col *ngFor="let header of headers; let i = index" [hidden]="i === 3 && !showQRColumn">
+      {{ header }}
+    </ion-col>
+  </ion-row>
+  <ion-row *ngFor="let row of data" class="data-row">
+    <ion-col data-label="Clase">{{ row.clase }}</ion-col>
+    <ion-col data-label="Sección">{{ row.seccion }}</ion-col>
+    <ion-col data-label="Sala">{{ row.sala }}</ion-col>
+    <ion-col *ngIf="showQRColumn">
+      <ion-button (click)="openQRModal(row)">Generar QR</ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+
+<!-- Modal Component -->
+<app-modal 
+  #modal 
+  [content]="'Contenido del modal'" 
+  [image]="selectedQRImage" 
+  [description]="selectedClass" 
+  [trigger]="'open-modal'">
+</app-modal>

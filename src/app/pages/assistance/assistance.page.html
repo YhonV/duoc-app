@@ -1,8 +1,15 @@
-<ion-button id="open-modal"  expand="block" fill="clear" shape="round">
-  Click me
-</ion-button>
-<app-modal
-title="Cuenta creada con éxito"
-content="Serás redirigido en unos segundos"
-image="assets/icon/check.png"
-></app-modal>
+<app-header title="Registro de asistencia" [showBackButton]="true"></app-header>
+<ion-content [fullscreen]="true" >
+  <ion-toolbar color="primary">
+    <ion-title>Primary Toolbar</ion-title>
+  </ion-toolbar>
+  <div class="content-container">
+    <div class="table-container">
+      <app-custom-table 
+        [data]="tableData" 
+        ></app-custom-table>
+    </div>
+  </div>
+
+
+</ion-content>

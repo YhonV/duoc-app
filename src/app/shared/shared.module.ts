@@ -6,6 +6,7 @@ import { LogoComponent } from './components/logo/logo.component';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalComponent } from './components/modal/modal.component';
+import { CustomTableComponent } from './components/custom-table/custom-table.component';
 
 
 
@@ -14,14 +15,16 @@ import { ModalComponent } from './components/modal/modal.component';
     [HeaderComponent,
     CustomInputsComponent,
     LogoComponent,
-    ModalComponent
+    ModalComponent,
+    CustomTableComponent
   ],
   exports: 
     [HeaderComponent,
     CustomInputsComponent,
     ReactiveFormsModule,
     LogoComponent,
-    ModalComponent
+    ModalComponent,
+    CustomTableComponent
   ],
   imports: [
     CommonModule,
