@@ -6,19 +6,18 @@ interface TableData {
   seccion: string;
   qr: string;
   sala: string;
+  horario: string;
 }
 
 @Component({
-  selector: 'app-custom-table',
-  templateUrl: './custom-table.component.html',
-  styleUrls: ['./custom-table.component.scss'],
+  selector: 'app-accordion',
+  templateUrl: './accordion.component.html',
+  styleUrls: ['./accordion.component.scss'],
 })
-export class CustomTableComponent implements OnInit {
+export class AccordionComponent implements OnInit {
   @Input() data: TableData[] = [];
   @Input() showQRColumn: boolean = true;
   @ViewChild('modal') modal!: ModalComponent;
-
-  headers: string[] = ['Clase', 'Sección', 'QR', 'Sala'];
 
   selectedClass: string = '';
   selectedQRImage: string = '';

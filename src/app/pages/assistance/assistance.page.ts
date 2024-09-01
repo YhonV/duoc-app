@@ -7,18 +7,16 @@ import { AnimationController } from '@ionic/angular';
   styleUrls: ['./assistance.page.scss'],
 })
 export class AssistancePage implements OnInit {
-  presentingElement: Element | null = null;
 
   tableData = [
-    { clase: 'ARQUITECTURA', seccion: 'ASY4131-003V', qr: 'QR1', sala: 'Sala 101' },
-    { clase: 'ARQUITECTURA', seccion: 'ASY4131-004V', qr: 'QR1', sala: 'Sala 102' },
-    { clase: 'PROG. APPS MÓVILES', seccion: 'PGY4121- 004V', qr: 'QR3', sala: 'Sala 303' },
-    { clase: 'PROG. APPS MÓVILES', seccion: 'PGY4121- 005V', qr: 'QR3', sala: 'Sala 303' }
+    { clase: 'ARQUITECTURA ASY4131', seccion: '003V', qr: 'QR1', sala: 'Sala 101', horario: 'Lunes 10:00 - 12:00' },
+    { clase: 'ARQUITECTURA ASY4132', seccion: 'ASY4131-004V', qr: 'QR1', sala: 'Sala 102', horario: 'Martes 10:00 - 12:00' },
+    { clase: 'PROG. APPS MÓVILES PGY4121', seccion: '004V', qr: 'QR3', sala: 'Sala 303', horario: 'Miércoles 10:00 - 12:00' },
+    { clase: 'PROG. APPS MÓVILES PGY4122', seccion: '005V', qr: 'QR3', sala: 'Sala 303', horario: 'Jueves 10:00 - 12:00' },
   ];
 
   constructor() { }
 
   ngOnInit() {
-    this.presentingElement = document.querySelector('.ion-page');
   }
 }

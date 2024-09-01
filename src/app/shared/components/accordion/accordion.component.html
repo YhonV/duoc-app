@@ -1,0 +1,29 @@
+<ion-accordion-group>
+  <ion-accordion *ngFor="let row of data" [value]="row.clase">
+    <ion-item slot="header" class="accordion-header">
+      <div class="header-content">
+        <ion-icon name="folder-open-outline" class="header-icon"></ion-icon>
+        <ion-label>{{ row.clase }}</ion-label>
+      </div>
+    </ion-item>
+    <div class="ion-padding accordion-content" slot="content">
+      <p><strong>Clase:</strong> {{ row.clase }}</p>
+      <p><strong>Sección:</strong> {{ row.seccion }}</p>
+      <p><strong>Sala:</strong> {{ row.sala }}</p>
+      <p><strong>Horario:</strong> {{ row.horario }}</p>
+      <ion-button *ngIf="showQRColumn" (click)="openQRModal(row)" expand="block" fill="outline">
+        <ion-icon name="qr-code-outline" slot="start"></ion-icon>
+        Generar QR
+      </ion-button>
+    </div>
+  </ion-accordion>
+</ion-accordion-group>
+
+<!-- Modal Component -->
+<app-modal 
+  #modal 
+  [content]="'Contenido del modal'" 
+  [image]="selectedQRImage" 
+  [description]="selectedClass" 
+  [trigger]="'open-modal'">
+</app-modal>

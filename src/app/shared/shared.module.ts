@@ -6,7 +6,7 @@ import { LogoComponent } from './components/logo/logo.component';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalComponent } from './components/modal/modal.component';
-import { CustomTableComponent } from './components/custom-table/custom-table.component';
+import { AccordionComponent } from './components/accordion/accordion.component';
 
 
 
@@ -16,7 +16,7 @@ import { CustomTableComponent } from './components/custom-table/custom-table.com
     CustomInputsComponent,
     LogoComponent,
     ModalComponent,
-    CustomTableComponent
+    AccordionComponent
   ],
   exports: 
     [HeaderComponent,
@@ -24,7 +24,7 @@ import { CustomTableComponent } from './components/custom-table/custom-table.com
     ReactiveFormsModule,
     LogoComponent,
     ModalComponent,
-    CustomTableComponent
+    AccordionComponent
   ],
   imports: [
     CommonModule,

@@ -1,15 +1,9 @@
 <app-header title="Registro de asistencia" [showBackButton]="true"></app-header>
-<ion-content [fullscreen]="true" >
+<ion-content [fullscreen]="true">
   <ion-toolbar color="primary">
     <ion-title>Primary Toolbar</ion-title>
   </ion-toolbar>
   <div class="content-container">
-    <div class="table-container">
-      <app-custom-table 
-        [data]="tableData" 
-        ></app-custom-table>
-    </div>
+    <app-accordion [data]="tableData"></app-accordion>
   </div>
-
-
 </ion-content>
