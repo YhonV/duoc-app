@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalComponent } from './components/modal/modal.component';
 import { AccordionComponent } from './components/accordion/accordion.component';
+import { QRCodeModule } from 'angularx-qrcode';
 
 
 
@@ -30,7 +31,8 @@ import { AccordionComponent } from './components/accordion/accordion.component';
     CommonModule,
     IonicModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    QRCodeModule
   ]
 })
 export class SharedModule { }

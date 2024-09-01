@@ -16,6 +16,7 @@ export class ModalComponent {
   @Input() trigger: string = '';
   @Input() autoClose: boolean = false;
   @Input() redirectTo: string = '';
+  @Input() showQRCode: boolean = false;
   @ViewChild(IonModal) modal!: IonModal;
 
   constructor(private animationCtrl: AnimationController,

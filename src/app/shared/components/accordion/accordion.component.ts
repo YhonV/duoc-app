@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ModalComponent } from '../modal/modal.component';
+import { QRCodeElementType, QRCodeModule } from 'angularx-qrcode';
 
 interface TableData {
   clase: string;
@@ -26,9 +27,10 @@ export class AccordionComponent implements OnInit {
 
   ngOnInit() {}
 
-  openQRModal(row: TableData) {
+  async openQRModal(row: TableData) {
     this.selectedClass = row.clase;
-    this.selectedQRImage = row.qr; // Asigna la imagen del QR desde los datos de la fila
+    this.selectedQRImage = row.qr;
+    this.modal.showQRCode = true;
     this.modal.modal.present();
-  }
+  }  
 }
