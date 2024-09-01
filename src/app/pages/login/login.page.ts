@@ -29,44 +29,55 @@ export class LoginPage implements OnInit {
   ngOnInit() {
   }
 
+  // openModal(title: string, content: string, image: string, description: string, isVisible: boolean) {
+  //   this.title = title;
+  //   this.content = content;
+  //   this.image = image;
+  //   this.description = description;
+  //   this.isModalVisible = isVisible;
+  // }
+
+  closeModal() {
+    this.isModalVisible = false;
+  }
+
   onSubmit() {
     if (this.form.valid) {
       // Lógica para manejar el inicio de sesión exitoso
-      console.log('Formulario válido', this.form.value);
+      console.log('Diste clic en el botón de ingresar');
     }
   }
 
-    // Función para abrir el modal con los datos adecuados
-    openModal(title: string, content: string, image: string, description: string) {
-      this.title = title;
-      this.content = content;
-      this.image = image;
-      this.description = description;
-      this.isModalVisible = true;
-    }
-  
-    // Función para cerrar el modal
-    onModalClose() {
-      this.isModalVisible = false;
-    }
-
-  ingresar(){
+  ingresar() {
     const emailValue = this.form.get('email')?.value;
     const passwordValue = this.form.get('password')?.value;
-    
-    if (emailValue && passwordValue && emailValue === 'admin@gmail.com' && passwordValue === 'admin123') {
-      this.router.navigate(['/home']);
-    }
-    else {
+    if (emailValue !== 'admin@gmail.com' || passwordValue !== 'admin123') {
       this.openModal(
         'Error',
         'Usuario incorrecto o no autorizado.',
         'assets/icon/error.jpg',
-        'Por favor, inténtalo de nuevo.'
+        'Por favor, inténtalo de nuevo.',
+        true
       );
+    } else {
+      this.router.navigate(['/home']);
     }
   }
-
-
-
+  
+  openModal(title: string, content: string, image: string, description: string, isVisible: boolean) {
+    this.title = title;
+    this.content = content;
+    this.image = image;
+    this.description = description;
+    this.isModalVisible = isVisible;
+    
+    setTimeout(() => {
+      if (this.modal) {
+        this.modal.open();
+      } else {
+        console.error('Modal component not found');
+      }
+    });
+    }
+  
 }

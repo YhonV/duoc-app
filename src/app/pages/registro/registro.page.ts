@@ -75,37 +75,61 @@ export class RegistroPage implements OnInit {
   ngOnInit() {}
 
   // Función para abrir el modal con los datos adecuados
-  openModal(title: string, content: string, image: string, description: string) {
+  openModal(title: string, content: string, image: string, description: string, autoClose: boolean) {
     this.title = title;
     this.content = content;
     this.image = image;
     this.description = description;
+    this.autoClose = autoClose;
     this.isModalVisible = true;
+    
+    setTimeout(() => {
+      if (this.modal) {
+        this.modal.open();
+      } else {
+        console.error('Modal component not found');
+      }
+    });
+
+    if (autoClose) {
+      setTimeout(() => {
+        this.isModalVisible = false;
+        if (this.redirectTo) {
+          this.router.navigate([this.redirectTo]);
+        }
+      }, 3000); // Redirigir después de 3 segundos
+    }
   }
 
   // Función para cerrar el modal
   onModalClose() {
     this.isModalVisible = false;
+    if (this.redirectTo) {
+      this.router.navigate([this.redirectTo]);
+    }
   }
 
   // Función para manejar la creación de cuenta
   crearCuenta() {
     if (this.registerForm.valid) {
-      this.title = 'Cuenta creada';
-      this.content = 'Tu cuenta ha sido creada exitosamente.';
-      this.image = 'assets/icon/check.png';
-      this.description = 'Serás redirigido al inicio de sesión en unos segundos.';
-      this.autoClose = true;
+      this.openModal(
+        'Cuenta creada',
+        'Tu cuenta ha sido creada exitosamente.',
+        'assets/icon/check.png',
+        'Serás redirigido al inicio de sesión en unos segundos.',
+        true
+      );
       this.redirectTo = '/login';
     } else {
-      this.title = 'Error';
-      this.content = 'No se pudo crear la cuenta. Por favor, inténtalo de nuevo.';
-      this.image = 'assets/icon/error.png';
-      this.description = '';
-      this.autoClose = false;
+      this.openModal(
+        'Error',
+        'No se pudo crear la cuenta. Por favor, inténtalo de nuevo.',
+        'assets/icon/error.png',
+        '',
+        false
+      );
       this.redirectTo = '';
     }
-
   }
 
   onSubmit() {

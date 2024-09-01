@@ -18,6 +18,8 @@ export class ModalComponent {
   @Input() redirectTo: string = '';
   @Input() showQRCode: boolean = false;
   @ViewChild(IonModal) modal!: IonModal;
+  isOpen: boolean = false;
+
 
   constructor(private animationCtrl: AnimationController,
     private router: Router
@@ -71,4 +73,12 @@ export class ModalComponent {
     this.modal.dismiss();
   }
 
-}
+  open() {
+    this.isOpen = true;
+  }
+
+  close() {
+    this.isOpen = false;
+  }
+
+} 

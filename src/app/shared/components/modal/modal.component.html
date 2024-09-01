@@ -1,5 +1,5 @@
 <ion-content class="ion-padding">
-  <ion-modal #modal trigger="open-modal" [enterAnimation]="enterAnimation" [leaveAnimation]="leaveAnimation" [cssClass]="'custom-modal'" (willPresent)="onWillPresent()">
+  <ion-modal #modal  [isOpen]="isOpen" [enterAnimation]="enterAnimation" [leaveAnimation]="leaveAnimation" [cssClass]="'custom-modal'" (willPresent)="onWillPresent()">
     <ng-template>
       <div class="modal-content">
         <ion-button fill="clear" class="close-button" (click)="modal.dismiss()">

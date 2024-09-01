@@ -67,7 +67,7 @@
       class="submit" 
       type="submit" 
       [disabled]="registerForm.invalid"
-      id="open-modal">
+      >
       Crear cuenta
       <ion-icon slot="end" name="person-add-outline"></ion-icon>
     </ion-button>
@@ -75,7 +75,7 @@
   </div>
 
   <app-modal
-  [trigger]="'open-modal'"
+  #modal
   [title]="title"
   [content]="content"
   [image]="image"
