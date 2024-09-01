@@ -1,0 +1,30 @@
+.custom-toolbar {
+    --background: linear-gradient(135deg, #1e88e5, #1565c0);
+    
+    .toolbar-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+    }
+  
+    .date-container {
+      display: flex;
+      align-items: center;
+      font-size: 0.9em;
+  
+      ion-icon {
+        margin-right: 5px;
+        font-size: 1.2em;
+      }
+    }
+  
+    .welcome-message {
+      font-size: 0.9em;
+      font-weight: bold;
+    }
+  }
+  
+  .content-container {
+    padding: 16px;
+  }

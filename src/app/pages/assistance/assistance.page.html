@@ -1,8 +1,19 @@
 <app-header title="Registro de asistencia" [showBackButton]="true"></app-header>
 <ion-content [fullscreen]="true">
-  <ion-toolbar color="primary">
-    <ion-title>Primary Toolbar</ion-title>
+  <ion-toolbar color="primary" class="custom-toolbar">
+    <ion-title>
+      <div class="toolbar-content">
+        <div class="date-container">
+          <ion-icon name="calendar-outline"></ion-icon>
+          <span>{{ currentDate }}</span>
+        </div>
+        <div class="welcome-message">
+          Bienvenido, {{ userName }}
+        </div>
+      </div>
+    </ion-title>
   </ion-toolbar>
+  <app-logo class="d-flex-center"></app-logo>
   <div class="content-container">
     <app-accordion [data]="tableData"></app-accordion>
   </div>

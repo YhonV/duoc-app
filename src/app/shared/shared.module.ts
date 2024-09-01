@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalComponent } from './components/modal/modal.component';
 import { AccordionComponent } from './components/accordion/accordion.component';
 import { QRCodeModule } from 'angularx-qrcode';
+import { ToolbarComponent } from './components/toolbar/toolbar.component';
 
 
 
@@ -17,7 +18,8 @@ import { QRCodeModule } from 'angularx-qrcode';
     CustomInputsComponent,
     LogoComponent,
     ModalComponent,
-    AccordionComponent
+    AccordionComponent,
+    ToolbarComponent
   ],
   exports: 
     [HeaderComponent,
@@ -25,7 +27,8 @@ import { QRCodeModule } from 'angularx-qrcode';
     ReactiveFormsModule,
     LogoComponent,
     ModalComponent,
-    AccordionComponent
+    AccordionComponent,
+    ToolbarComponent
   ],
   imports: [
     CommonModule,
