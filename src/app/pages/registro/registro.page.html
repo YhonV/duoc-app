@@ -10,6 +10,7 @@
         [control]="registerForm.controls['name']"
         type="text"
         label="Nombres y Apellidos"
+        [maxLength]="40"
       ></app-custom-inputs>
 
       <app-custom-inputs
@@ -17,13 +18,17 @@
         [control]="registerForm.controls['rut']"
         type="text"
         label="RUT sin puntos ni guión"
+        [maxLength]="9"
+        
       ></app-custom-inputs>
 
       <app-custom-inputs
         icon="call-outline"
         [control]="registerForm.controls['phone']"
-        type="number"
+        type="text"
         label="Número de Teléfono"
+        [maxLength]="9"
+        (inputEvent)="filtrarPhone($event)"
       ></app-custom-inputs>
 
       <app-custom-inputs 
@@ -32,6 +37,7 @@
         [control]="registerForm.controls['email']"
         type="email"
         label="Correo electrónico"
+        [maxLength]="50"
       ></app-custom-inputs>
 
       <app-custom-inputs
@@ -39,6 +45,7 @@
         [control]="registerForm.controls['password']"
         type="password"
         label="Contraseña"
+        [maxLength]="12"
       ></app-custom-inputs>
 
       <app-custom-inputs
@@ -46,10 +53,11 @@
         [control]="registerForm.controls['confirmPassword']"
         type="password"
         label="Confirmar contraseña"
+        [maxLength]="12"
       ></app-custom-inputs>
 
       <div class="validators" *ngIf="registerForm.controls['email'].errors?.['email']">Ingrese un correo válido</div>
-      <div class="validators" *ngIf="registerForm.controls['password'].errors?.['minlength']">La contraseña debe tener al menos 6 caracteres</div>
+      <div class="validators" *ngIf="registerForm.controls['password'].errors?.['minlength']">La contraseña debe tener entre 6 y 12 caracteres</div>
       <div class="validators" *ngIf="registerForm.errors?.['mismatch']">Las contraseñas no coinciden</div>
 
       <ion-button  

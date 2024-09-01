@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -13,6 +13,21 @@ export class CustomInputsComponent  implements OnInit {
   @Input() label!: string;
   @Input() autocomplete!: string;
   @Input() icon!: string;
+  @Input() maxLength: number = 0;
+  @Output() inputEvent = new EventEmitter<any>();
+
+  onInput(event: any) {
+    this.inputEvent.emit(event);
+  }
+
+  enforceMaxLength(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.value.length > this.maxLength) {
+      input.value = input.value.slice(0, this.maxLength);
+      // Actualizar el valor en el modelo (si estás usando Angular Forms)
+      this.control.setValue(input.value, { emitEvent: false });
+    }
+  }
 
   isPassword !: boolean;
   hide : boolean = true;

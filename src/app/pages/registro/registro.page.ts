@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 
@@ -18,7 +18,6 @@ export class RegistroPage implements OnInit {
   autoClose: boolean = false;
   redirectTo: string = '';
 
-
   // Validador personalizado para las contraseñas
   validarPass: ValidatorFn = (formGroup: AbstractControl): { [key: string]: boolean } | null => {
     const password = formGroup.get('password')?.value;
@@ -29,14 +28,47 @@ export class RegistroPage implements OnInit {
       : null;
   };
 
+
   registerForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
     rut: new FormControl('', [Validators.required]),
-    phone: new FormControl('', [Validators.required]),
+    phone: new FormControl('', [Validators.required, this.validarPhone()]),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
     confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6)]),
   }, { validators: this.validarPass });
+
+
+  validarRut(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const rut = control.value;
+      
+      // Verifica que el rut tenga un formato válido
+      const esValido = /^[0-9]{7,8}-[0-9Kk]$/.test(rut);
+      
+      return esValido ? null : { rutInvalido: true };
+    }  
+  }
+  
+  validarPhone(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const phone = control.value;
+      
+      // Verifica que el teléfono tenga 9 dígitos y solo contenga números
+      const esValido = /^[0-9]{9}$/.test(phone);
+      
+      return esValido ? null : { phoneInvalido: true };
+    };
+  }
+  
+
+  
+
+  // Método para filtrar la entrada de caracteres en el campo de teléfono
+  filtrarPhone(event: any): void {
+    const input = event.target;
+    input.value = input.value.replace(/[^0-9]/g, '');
+  }
 
   constructor(private router: Router) {}
 

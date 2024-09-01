@@ -12,6 +12,7 @@
     [label]="label"
     [formControl]="control"
     label-placement="floating"
+    (input)="enforceMaxLength($event)"
     >
   </ion-input>
 
