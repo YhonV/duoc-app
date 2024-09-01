@@ -2,39 +2,30 @@
 
 <ion-content [fullscreen]="true">
   <div class="content-wrapper">
-    <div class="date-container">
-      <h4>{{ currentDate }}</h4>
-    </div>
+    <app-logo class="d-flex-center"></app-logo>
     <h3 class="welcome-text">Bienvenido</h3>
 
-    <div class="d-flex-center">
-
-      <ion-button color="secondary" expand="block" mode="ios" shape="round" class="submit" type="submit" 
-      [routerLink]="['/login']">
-        Mi Perfil
-        <ion-icon slot="end" name="person"></ion-icon>
+    <div class="button-container">
+      <ion-button class="custom-button" expand="block" [routerLink]="['/profile']">
+        <div class="button-content">
+          <ion-icon name="person-outline" class="icon-secondary"></ion-icon>
+          <span>Mi Perfil</span>
+        </div>
       </ion-button>
 
-      <ion-button color="secondary" expand="block" mode="ios" shape="round" class="submit" type="submit" 
-      [routerLink]="['/login']">
-        Mi Horario
-        <ion-icon slot="end" name="calendar"></ion-icon>
-      </ion-button>
-      
-      <ion-button color="secondary" expand="block" mode="ios" shape="round" class="submit" type="submit" 
-      [routerLink]="['/login']">
-        Mi Asistencia
-        <ion-icon slot="end" name="podium"></ion-icon>
+      <ion-button class="custom-button" expand="block" [routerLink]="['/schedule']">
+        <div class="button-content">
+          <ion-icon name="time-outline" class="icon-secondary"></ion-icon>
+          <span>Mi Horario</span>
+        </div>
       </ion-button>
 
-      <ion-button color="secondary" expand="block" mode="ios" shape="round" class="submit" type="submit" 
-      [routerLink]="['/login']">
-        Registrar Asistencia
-        <ion-icon slot="end" name="checkmark-circle"></ion-icon>
+      <ion-button class="custom-button" expand="block" [routerLink]="['/attendance']">
+        <div class="button-content">
+          <ion-icon name="calendar-outline" class="icon-secondary"></ion-icon>
+          <span>Mi Asistencia</span>
+        </div>
       </ion-button>
-
     </div>
   </div>
-  
 </ion-content>
-
