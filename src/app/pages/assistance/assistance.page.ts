@@ -8,45 +8,24 @@ import { AnimationController } from '@ionic/angular';
 })
 export class AssistancePage implements OnInit {
 
-  currentDate: string;
-  userName: string = 'Profesor'; 
-
   tableData = [
     { clase: 'ARQUITECTURA ASY4131', seccion: '003V', qr:'', sala: 'Sala 101', horario: 'Lunes 10:00 - 12:00' },
     { clase: 'ARQUITECTURA ASY4132', seccion: 'ASY4131-004V', qr:'', sala: 'Sala 102', horario: 'Martes 10:00 - 12:00' },
     { clase: 'PROG. APPS MÓVILES PGY4121', seccion: '004V', qr:'', sala: 'Sala 303', horario: 'Miércoles 10:00 - 12:00' },
     { clase: 'PROG. APPS MÓVILES PGY4122', seccion: '005V', qr:'', sala: 'Sala 303', horario: 'Jueves 10:00 - 12:00' },
+    { clase: 'PROG. APPS MÓVILES PGY4123', seccion: '006V', qr:'', sala: 'Sala 303', horario: 'Jueves 10:00 - 12:00' },
+    { clase: 'PROG. APPS MÓVILES PGY4124', seccion: '007V', qr:'', sala: 'Sala 303', horario: 'Jueves 10:00 - 12:00' },
+    { clase: 'PROG. APPS MÓVILES PGY4125', seccion: '008V', qr:'', sala: 'Sala 303', horario: 'Jueves 10:00 - 12:00' },
+    { clase: 'PROG. APPS MÓVILES PGY4126', seccion: '009V', qr:'', sala: 'Sala 303', horario: 'Jueves 10:00 - 12:00' },
+    { clase: 'PROG. APPS MÓVILES PGY4127', seccion: '002V', qr:'', sala: 'Sala 303', horario: 'Jueves 10:00 - 12:00' },
   ];
 
-  constructor() { this.currentDate = this.getFormattedDate();}
+  constructor() {}
 
   ngOnInit() {
     this.tableData = this.tableData.map(row => ({
       ...row,
       qr: `${row.clase} ${row.horario} ${row.seccion}`
     }));
-  }
-
-  getFormattedDate(): string {
-    const date = new Date();
-    const options: Intl.DateTimeFormatOptions = {
-      weekday: 'long',
-      day: '2-digit',
-      month: 'long',
-      year: 'numeric'
-    };
-    
-    let formattedDate = date.toLocaleDateString('es-ES', options);
-  
-    // Divide la cadena en palabras
-    let words = formattedDate.split(' ');
-    
-    // Capitaliza la primera palabra (día de la semana) y la tercera palabra (mes)
-    words[0] = words[0].charAt(0).toUpperCase() + words[0].slice(1);
-    words[3] = words[3].charAt(0).toUpperCase() + words[3].slice(1);
-    
-    // Une las palabras de nuevo en una cadena
-    return words.join(' ');
-    
   }
 }

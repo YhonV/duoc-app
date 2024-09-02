@@ -19,6 +19,7 @@ export class AccordionComponent implements OnInit {
   @Input() data: TableData[] = [];
   @Input() showQRColumn: boolean = true;
   @ViewChild('modal') modal!: ModalComponent;
+  @Input() warning: string = '';
 
   selectedClass: string = '';
   selectedQRImage: string = '';
@@ -31,6 +32,7 @@ export class AccordionComponent implements OnInit {
     this.selectedClass = row.clase;
     this.selectedQRImage = row.qr;
     this.modal.showQRCode = true;
+    this.warning = '** Código válido por 10 minutos **';
     this.modal.modal.present();
   }  
 }

@@ -1,1 +1,41 @@
-<app-toolbar></app-toolbar>
+
+<ion-content [fullscreen]="true">
+  <app-header title="Perfil" [showBackButton]="true"></app-header>
+  <app-toolbar></app-toolbar>
+  <div class="profile-container ion-padding">
+    <ion-avatar class="large-avatar">
+      <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+    </ion-avatar>
+    <h2 class="username">{{ username }}</h2>
+    <ion-card>
+      <ion-card-content>
+        <ion-list lines="none">
+          <ion-item>
+            <ion-icon name="school-outline" slot="start"></ion-icon>
+            <ion-label>
+              <h3>Sede de Estudio</h3>
+              <p>{{ headquarters }}</p>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-icon name="mail-outline" slot="start"></ion-icon>
+            <ion-label>
+              <h3>Correo Asociado</h3>
+              <p>{{ email }}</p>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-icon name="call-outline" slot="start"></ion-icon>
+            <ion-label>
+              <h3>Teléfono</h3>
+              <p>{{ phone }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+    <ion-button expand="block" class="ion-margin-top" color="primary">
+      Editar Perfil
+    </ion-button>
+  </div>
+</ion-content>

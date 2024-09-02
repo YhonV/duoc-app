@@ -23,6 +23,8 @@
 <app-modal 
   #modal 
   [image]="selectedQRImage" 
-  [description]="selectedClass" 
-  [trigger]="'open-modal'">
+  [title]="selectedClass"
+  [content]="warning"
+  [trigger]="'open-modal'"
+  >
 </app-modal>

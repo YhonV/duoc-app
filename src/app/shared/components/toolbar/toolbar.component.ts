@@ -1,13 +1,21 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss'],
 })
-export class ToolbarComponent  implements OnInit {
+export class ToolbarComponent implements OnInit {
   currentDate: string;
-  constructor() { this.currentDate = this.getFormattedDate();}
+
+  constructor(
+    private menuController: MenuController,
+    private router: Router
+  ) { 
+    this.currentDate = this.getFormattedDate();
+  }
 
   ngOnInit() {}
 
@@ -31,6 +39,27 @@ export class ToolbarComponent  implements OnInit {
     
     // Une las palabras de nuevo en una cadena
     return words.join(' ');
-    
+  }
+
+  openMenu() {
+    console.log('Abriendo menú...');
+    this.menuController.open('end');
+  }
+
+  closeMenu() {
+    console.log('Cerrando menú...');
+    this.menuController.close('end');
+  }
+
+  viewProfile() {
+    console.log('Viendo perfil...');
+    this.closeMenu();
+    this.router.navigate(['/profile']);
+  }
+
+  logout() {
+    console.log('Cerrando sesión...');
+    this.closeMenu();
+    this.router.navigate(['/login']);
   }
 }
