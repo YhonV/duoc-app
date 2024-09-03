@@ -29,14 +29,6 @@ export class LoginPage implements OnInit {
   ngOnInit() {
   }
 
-  // openModal(title: string, content: string, image: string, description: string, isVisible: boolean) {
-  //   this.title = title;
-  //   this.content = content;
-  //   this.image = image;
-  //   this.description = description;
-  //   this.isModalVisible = isVisible;
-  // }
-
   closeModal() {
     this.isModalVisible = false;
   }
