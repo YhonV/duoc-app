@@ -9,6 +9,7 @@ import { ModalComponent } from './components/modal/modal.component';
 import { AccordionComponent } from './components/accordion/accordion.component';
 import { QRCodeModule } from 'angularx-qrcode';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { MenuComponent } from './components/menu/menu.component';
 
 
 
@@ -19,7 +20,8 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
     LogoComponent,
     ModalComponent,
     AccordionComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    MenuComponent
   ],
   exports: 
     [HeaderComponent,
@@ -28,7 +30,8 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
     LogoComponent,
     ModalComponent,
     AccordionComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    MenuComponent
   ],
   imports: [
     CommonModule,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 
@@ -9,11 +9,9 @@ import { MenuController } from '@ionic/angular';
 })
 export class ToolbarComponent implements OnInit {
   currentDate: string;
-
-  constructor(
-    private menuController: MenuController,
-    private router: Router
-  ) { 
+  @Input() showBackButton: boolean = false;
+  
+  constructor(private menuController: MenuController) { 
     this.currentDate = this.getFormattedDate();
   }
 
@@ -42,24 +40,9 @@ export class ToolbarComponent implements OnInit {
   }
 
   openMenu() {
-    console.log('Abriendo menú...');
-    this.menuController.open('end');
+    console.log('open menu');
+    this.menuController.open('main-menu');
   }
 
-  closeMenu() {
-    console.log('Cerrando menú...');
-    this.menuController.close('end');
-  }
 
-  viewProfile() {
-    console.log('Viendo perfil...');
-    this.closeMenu();
-    this.router.navigate(['/profile']);
-  }
-
-  logout() {
-    console.log('Cerrando sesión...');
-    this.closeMenu();
-    this.router.navigate(['/login']);
-  }
 }
