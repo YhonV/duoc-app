@@ -3,11 +3,13 @@ import { ModalComponent } from '../modal/modal.component';
 import { QRCodeElementType, QRCodeModule } from 'angularx-qrcode';
 
 interface TableData {
+  title: string;
   clase: string;
   seccion: string;
-  qr: string;
+  qr?: string;
   sala: string;
   horario: string;
+  dia?: string;
 }
 
 @Component({
@@ -30,7 +32,7 @@ export class AccordionComponent implements OnInit {
 
   async openQRModal(row: TableData) {
     this.selectedClass = row.clase;
-    this.selectedQRImage = row.qr;
+    this.selectedQRImage = row.qr ?? '';
     this.modal.showQRCode = true;
     this.warning = '** Código válido por 10 minutos **';
     this.modal.modal.present();
