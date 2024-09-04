@@ -20,6 +20,8 @@ interface TableData {
 export class AccordionComponent implements OnInit {
   @Input() data: TableData[] = [];
   @Input() showQRColumn: boolean = true;
+  @Input() showScanQR: boolean = true;
+  @Input() allAsistance: boolean = true;
   @ViewChild('modal') modal!: ModalComponent;
   @Input() warning: string = '';
 

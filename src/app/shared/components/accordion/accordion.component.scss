@@ -64,3 +64,25 @@ ion-accordion.accordion-expanding .header-icon,
 ion-accordion.accordion-expanded .header-icon {
   color: var(--ion-color-primary-contrast);
 }
+
+.custom-button {
+  width: 48%; /* Adjust as needed */
+  margin: 1%;
+}
+
+.scan-button {
+  float: left;
+}
+
+.attendance-button {
+  float: right;
+  border-color: #ffb800 !important;
+  --border-color: #ffb800 !important;
+}
+
+/* Clear the float to prevent layout issues */
+.accordion-content::after {
+  content: "";
+  display: table;
+  clear: both;
+}

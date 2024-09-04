@@ -34,10 +34,15 @@ const routes: Routes = [
   {
     path: 'profile',
     loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
-  },  {
+  },
+  {
     path: 'schedule',
     loadChildren: () => import('./pages/schedule/schedule.module').then( m => m.SchedulePageModule)
+  },  {
+    path: 'assistance-student',
+    loadChildren: () => import('./pages/assistance-student/assistance-student.module').then( m => m.AssistanceStudentPageModule)
   },
+
 
 
 
