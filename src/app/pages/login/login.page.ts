@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
+import { AutenticacionService } from 'src/app/autenticacion.service';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,7 @@ export class LoginPage implements OnInit {
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
   });
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private autenticacionService: AutenticacionService) {}
 
   ngOnInit() {
   }
@@ -43,7 +44,14 @@ export class LoginPage implements OnInit {
   ingresar() {
     const emailValue = this.form.get('email')?.value;
     const passwordValue = this.form.get('password')?.value;
-    if (emailValue !== 'admin@gmail.com' || passwordValue !== 'admin123') {
+  
+    if (emailValue === 'admin@gmail.com' && passwordValue === 'admin123') {
+      this.autenticacionService.setUserRole('admin');  // Establecer rol como admin
+      this.router.navigate(['/home']);
+    } else if (emailValue === 'student@gmail.com' && passwordValue === 'student123') {
+      this.autenticacionService.setUserRole('student');  // Establecer rol como estudiante
+      this.router.navigate(['/home']);
+    } else {
       this.openModal(
         'Error',
         'Usuario incorrecto o no autorizado.',
@@ -51,8 +59,6 @@ export class LoginPage implements OnInit {
         'Por favor, inténtalo de nuevo.',
         true
       );
-    } else {
-      this.router.navigate(['/home']);
     }
   }
   
@@ -70,6 +76,6 @@ export class LoginPage implements OnInit {
         console.error('Modal component not found');
       }
     });
-    }
+  }
   
 }

@@ -31,7 +31,8 @@
       </ion-card-content>
     </ion-card>
 
-    <ion-card mode="ios" class="custom-card">
+    <!-- Gestión de Asistencia solo para Admin -->
+    <ion-card *ngIf="userRole === 'admin'" mode="ios" class="custom-card">
       <img alt="Imagen Asistencia" src="assets/icon/asistencia.jpg" />
       <ion-card-header>
         <ion-card-subtitle class="card-sub">
@@ -40,23 +41,23 @@
       </ion-card-header>
     
       <ion-card-content class="card-cont">
-        Registrar la asistencia nunca fue tan fácil y rápido.
+        Gestiona la asistencia de los estudiantes.
       </ion-card-content>
     </ion-card>
 
-    <ion-card mode="ios" class="custom-card">
+    <!-- Gestión de Asistencia solo para Estudiante -->
+    <ion-card *ngIf="userRole === 'student'" mode="ios" class="custom-card">
       <img alt="Imagen Asistencia" src="assets/icon/asistencia.jpg" />
       <ion-card-header>
         <ion-card-subtitle class="card-sub">
-          <ion-button fill="outline" color="secondary" class="card-sub" [routerLink]="['/assistance-student']">Gestión de Asistencia [ESTUDIANTE]</ion-button>
+          <ion-button fill="outline" color="secondary" class="card-sub" [routerLink]="['/assistance-student']">Registra tu Asistencia</ion-button>
         </ion-card-subtitle>
       </ion-card-header>
     
       <ion-card-content class="card-cont">
-        Registrar la asistencia nunca fue tan fácil y rápido.
+        Registrar tu asistencia nunca fue tan fácil.
       </ion-card-content>
     </ion-card>
 
-    
   </div>
 </ion-content>
