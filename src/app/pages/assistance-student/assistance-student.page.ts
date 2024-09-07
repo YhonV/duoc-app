@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { LoadingController, ModalController, Platform } from '@ionic/angular';
+import { BarcodeScanningModalComponent } from './barcode-scanning-modal.component';
+import { LensFacing } from '@capacitor-mlkit/barcode-scanning';
 
 @Component({
   selector: 'app-assistance-student',
@@ -7,7 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AssistanceStudentPage implements OnInit {
 
-  constructor() { }
+  scanResult = '';
+  constructor(
+    private loadingController: LoadingController,
+    private platform: Platform,
+    private modalController: ModalController
+  ) { }
 
   ngOnInit() {
   }
@@ -23,5 +31,25 @@ export class AssistanceStudentPage implements OnInit {
     { title: 'PROG. APPS MÓVILES PGY4126', clase: 'PROG. APPS MÓVILES PGY4126', seccion: '009V', qr:'', sala: 'Sala 413', horario: 'Miércoles 15:00 - 18:00' },
     { title: 'ARQUITECTURA ASY4131', clase: 'ARQUITECTURA ASY4131', seccion: '002V', qr:'', sala: 'Sala 410', horario: 'Jueves 14:00 - 17:00' },
   ];
+
+  async startScanner() {
+    const modal = await this.modalController.create({
+    component: BarcodeScanningModalComponent,
+    cssClass: 'barcode-scanning-modal',
+    showBackdrop: false,
+    componentProps: { 
+      formats: [],
+      LensFacing: LensFacing.Back,
+     }
+    });
+  
+    await modal.present();
+
+    const { data } = await modal.onWillDismiss();
+    
+    if(data){
+      this.scanResult = data?.barcode?.displayValue;
+    }
+  }
 
 }

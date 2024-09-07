@@ -1,6 +1,8 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ModalComponent } from '../modal/modal.component';
-import { QRCodeElementType, QRCodeModule } from 'angularx-qrcode';
+import { LoadingController, ModalController, Platform } from '@ionic/angular';
+import { BarcodeScanner, LensFacing } from '@capacitor-mlkit/barcode-scanning';
+import { BarcodeScanningModalComponent } from './barcode-scanning-modal.component';
 
 interface TableData {
   title: string;
@@ -24,13 +26,24 @@ export class AccordionComponent implements OnInit {
   @Input() allAsistance: boolean = true;
   @ViewChild('modal') modal!: ModalComponent;
   @Input() warning: string = '';
+  scanResult = '';
 
   selectedClass: string = '';
   selectedQRImage: string = '';
 
-  constructor() {}
+  constructor(
+    private loadingController: LoadingController,
+    private platform: Platform,
+    private modalController: ModalController
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if(this.platform.is('capacitor')){
+      BarcodeScanner.isSupported().then();
+      BarcodeScanner.checkPermissions().then();
+      BarcodeScanner.removeAllListeners();
+    }
+  }
 
   async openQRModal(row: TableData) {
     this.selectedClass = row.clase;
@@ -39,4 +52,24 @@ export class AccordionComponent implements OnInit {
     this.warning = '** Código válido por 10 minutos **';
     this.modal.modal.present();
   }  
+
+  async startScanner() {
+    const modal = await this.modalController.create({
+    component: BarcodeScanningModalComponent,
+    cssClass: 'barcode-scanning-modal',
+    showBackdrop: false,
+    componentProps: { 
+      formats: [],
+      LensFacing: LensFacing.Back,
+     }
+    });
+  
+    await modal.present();
+
+    const { data } = await modal.onWillDismiss();
+    
+    if(data){
+      this.scanResult = data?.barcode?.displayValue;
+    }
+  }
 }

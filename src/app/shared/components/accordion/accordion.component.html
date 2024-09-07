@@ -15,7 +15,7 @@
         <ion-icon name="qr-code-outline" slot="start"></ion-icon>
         Generar QR
       </ion-button>
-      <ion-button *ngIf="showScanQR" (click)="openQRModal(row)" expand="block" fill="outline" class="custom-button scan-button">
+      <ion-button *ngIf="showScanQR" (click)="startScanner()" expand="block" fill="outline" class="custom-button scan-button">
         <ion-icon name="qr-code-outline" slot="start"></ion-icon>
         Escanear QR
       </ion-button>
