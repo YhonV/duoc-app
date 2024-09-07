@@ -32,11 +32,13 @@ export class LoginPage implements OnInit {
 
   closeModal() {
     this.isModalVisible = false;
+    if (this.modal) {
+      this.modal.close();
+    }
   }
 
   onSubmit() {
     if (this.form.valid) {
-      // Lógica para manejar el inicio de sesión exitoso
       console.log('Diste clic en el botón de ingresar');
     }
   }
@@ -59,6 +61,7 @@ export class LoginPage implements OnInit {
         'Por favor, inténtalo de nuevo.',
         true
       );
+      this.closeModal();
     }
   }
   
