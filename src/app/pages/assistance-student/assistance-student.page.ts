@@ -32,6 +32,8 @@ export class AssistanceStudentPage implements OnInit {
     { title: 'ARQUITECTURA ASY4131', clase: 'ARQUITECTURA ASY4131', seccion: '002V', qr:'', sala: 'Sala 410', horario: 'Jueves 14:00 - 17:00' },
   ];
 
+  
+
   async startScanner() {
     const modal = await this.modalController.create({
     component: BarcodeScanningModalComponent,

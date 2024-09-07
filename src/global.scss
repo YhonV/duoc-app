@@ -147,3 +147,17 @@ body.barcode-scanning-active{
         --ion-background-color: transparent;
     }
 }
+
+.attendance-modal {
+    --width: 90%;
+    --height: 90%;
+    --border-radius: 10px;
+  }
+  
+  .attendance-modal::part(content) {
+    border-radius: 10px;
+  }
+  
+  .ios .attendance-modal::part(content) {
+    border-radius: 10px;
+  }

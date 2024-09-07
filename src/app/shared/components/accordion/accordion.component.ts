@@ -3,6 +3,7 @@ import { ModalComponent } from '../modal/modal.component';
 import { LoadingController, ModalController, Platform } from '@ionic/angular';
 import { BarcodeScanner, LensFacing } from '@capacitor-mlkit/barcode-scanning';
 import { BarcodeScanningModalComponent } from './barcode-scanning-modal.component';
+import { AttendanceModalComponent } from './attendance-modal.component';
 
 interface TableData {
   title: string;
@@ -72,4 +73,33 @@ export class AccordionComponent implements OnInit {
       this.scanResult = data?.barcode?.displayValue;
     }
   }
+
+  async openAttendanceModal(row: TableData) {
+    const modal = await this.modalController.create({
+      component: AttendanceModalComponent,
+      componentProps: {
+        attendanceRecords: [
+          { date: '2024-08-15', subject: row.clase, present: true, justified: false, absent: false },
+          { date: '2024-08-16', subject: row.clase, present: false, justified: false, absent: true },
+          { date: '2024-08-19', subject: row.clase, present: true, justified: false, absent: false },
+          { date: '2024-08-19', subject: row.clase, present: false, justified: false, absent: true },
+          { date: '2024-08-20', subject: row.clase, present: true, justified: false, absent: false },
+          { date: '2024-08-20', subject: row.clase, present: true, justified: false, absent: false },
+          { date: '2024-08-21', subject: row.clase, present: false, justified: false, absent: true },
+          { date: '2024-08-19', subject: row.clase, present: true, justified: false, absent: false },
+          { date: '2024-08-20', subject: row.clase, present: true, justified: false, absent: false },
+          { date: '2024-08-21', subject: row.clase, present: false, justified: true, absent: false },
+          { date: '2024-08-22', subject: row.clase, present: true, justified: false, absent: false },
+          { date: '2024-08-23', subject: row.clase, present: false, justified: true, absent: false },
+          { date: '2024-08-25', subject: row.clase, present: true, justified: false, absent: false },
+          { date: '2024-08-25', subject: row.clase, present: true, justified: false, absent: false },
+          { date: '2024-08-26', subject: row.clase, present: true, justified: false, absent: false },
+          { date: '2024-08-27', subject: row.clase, present: false, justified: false, absent: true },
+        ]
+      },
+      cssClass: 'attendance-modal'
+    });
+    await modal.present();
+  }
+
 }

@@ -11,6 +11,7 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { BarcodeScanningModalComponent } from './components/accordion/barcode-scanning-modal.component';
+import { AttendanceModalComponent } from './components/accordion/attendance-modal.component';
 
 
 
@@ -23,7 +24,8 @@ import { BarcodeScanningModalComponent } from './components/accordion/barcode-sc
     AccordionComponent,
     ToolbarComponent,
     MenuComponent,
-    BarcodeScanningModalComponent
+    BarcodeScanningModalComponent,
+    AttendanceModalComponent
   ],
   exports: 
     [HeaderComponent,
@@ -34,7 +36,8 @@ import { BarcodeScanningModalComponent } from './components/accordion/barcode-sc
     AccordionComponent,
     ToolbarComponent,
     MenuComponent,
-    BarcodeScanningModalComponent
+    BarcodeScanningModalComponent,
+    AttendanceModalComponent
   ],
   imports: [
     CommonModule,
