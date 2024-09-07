@@ -115,7 +115,7 @@ export class AttendanceModalComponent {
   }
 
   formatDate(date: string): string {
-    const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: 'long', year: 'numeric' };
+    const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: 'long'};
     return new Date(date).toLocaleDateString('es-ES', options);
   }
 
