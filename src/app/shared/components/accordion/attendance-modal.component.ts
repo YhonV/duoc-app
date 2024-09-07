@@ -3,11 +3,12 @@ import { ModalController } from '@ionic/angular';
 
 interface AttendanceRecord {
   date: string;
-  subject: string;
   present: boolean;
   justified: boolean;
   absent: boolean;
 }
+
+
 
 @Component({
   selector: 'app-attendance-modal',
@@ -23,25 +24,23 @@ interface AttendanceRecord {
     <ion-content>
       <div class="attendance-table">
         <div class="table-header">
-          <div class="header-cell">Fecha</div>
-          <div class="header-cell">Materia</div>
+          <div class="header-cell date">Fecha</div>
           <div class="header-cell">Presente</div>
           <div class="header-cell">Justificado</div>
           <div class="header-cell">Ausente</div>
         </div>
         <div class="table-body">
           <div class="table-row" *ngFor="let record of attendanceRecords">
-            <div class="table-cell">{{ record.date }}</div>
-            <div class="table-cell">{{ record.subject }}</div>
-            <div class="table-cell">
+            <div class="table-cell date">{{ formatDate(record.date) }}</div>
+            <div class="table-cell icon-cell">
               <ion-icon [name]="record.present ? 'checkmark-circle' : 'close-circle'" 
                         [color]="record.present ? 'success' : 'medium'"></ion-icon>
             </div>
-            <div class="table-cell">
+            <div class="table-cell icon-cell">
               <ion-icon [name]="record.justified ? 'checkmark-circle' : 'close-circle'" 
                         [color]="record.justified ? 'warning' : 'medium'"></ion-icon>
             </div>
-            <div class="table-cell">
+            <div class="table-cell icon-cell">
               <ion-icon [name]="record.absent ? 'checkmark-circle' : 'close-circle'" 
                         [color]="record.absent ? 'danger' : 'medium'"></ion-icon>
             </div>
@@ -53,35 +52,56 @@ interface AttendanceRecord {
   styles: [`
     .attendance-table {
       width: 100%;
-      border-collapse: collapse;
+    }
+    .table-header, .table-row {
+      display: grid;
+      grid-template-columns: 2fr repeat(3, 1fr);
+      align-items: center;
     }
     .table-header {
-      display: flex;
       background-color: #f4f4f4;
       font-weight: bold;
-      border-bottom: 2px solid #ddd;
-    }
-    .table-body {
-      display: flex;
-      flex-direction: column;
-    }
-    .table-row {
-      display: flex;
-      border-bottom: 1px solid #ddd;
+      position: sticky;
+      top: 0;
+      z-index: 1;
     }
     .header-cell, .table-cell {
-      flex: 1;
-      padding: 10px;
+      padding: 10px 5px;
       text-align: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    }
+    .header-cell.date, .table-cell.date {
+      text-align: left;
+      padding-left: 10px;
+    }
+    .table-body {
+      overflow-y: auto;
+      max-height: calc(100vh - 120px);
+    }
+    .table-row {
+      border-bottom: 1px solid #ddd;
     }
     .table-row:nth-child(even) {
       background-color: #f9f9f9;
     }
+    .icon-cell {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
     ion-icon {
       font-size: 24px;
+    }
+    @media (max-width: 480px) {
+      .table-header, .table-row {
+        grid-template-columns: 1.5fr repeat(3, 1fr);
+      }
+      .header-cell, .table-cell {
+        padding: 8px 2px;
+        font-size: 14px;
+      }
+      ion-icon {
+        font-size: 20px;
+      }
     }
   `]
 })
@@ -93,4 +113,10 @@ export class AttendanceModalComponent {
   dismissModal() {
     this.modalController.dismiss();
   }
+
+  formatDate(date: string): string {
+    const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: 'long', year: 'numeric' };
+    return new Date(date).toLocaleDateString('es-ES', options);
+  }
+
 }
