@@ -3,6 +3,11 @@
   <app-toolbar></app-toolbar>
   <app-logo class="d-flex-center"></app-logo>
   <div class="content-container">
-    <app-accordion [data]="tableData" [showQRColumn]="false"></app-accordion>
+    <div class="toggle-container">
+      <ion-toggle class="custom-toggle" aria-label="Warning toggle" color="warning" labelPlacement="end" (ionChange)="mostrarAsignaturas($event)"> 
+        <span class="toggle-label">Asignaturas transversales</span>
+      </ion-toggle>
+    </div>
+    <app-accordion [data]="filteredTableData" [showQRColumn]="false"></app-accordion>
   </div>
 </ion-content>

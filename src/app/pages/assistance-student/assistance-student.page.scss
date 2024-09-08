@@ -1,0 +1,22 @@
+.toggle-container {
+    background-color: #FFF5CC; 
+    padding: 10px 15px; 
+    display: flex;
+    align-items: center;
+  }
+  
+  .custom-toggle {
+    --handle-background: var(--ion-color-primary); 
+    --background: var(--ion-color-light); 
+    --handle-width: 20px;
+    --handle-height: 20px; 
+  }
+  
+  .toggle-label {
+    font-size: 16px;
+    color: #333;
+    font-family: 'Roboto', sans-serif;
+    font-style: italic;
+  }
+  
+  

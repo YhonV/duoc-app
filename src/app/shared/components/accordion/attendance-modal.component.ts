@@ -15,9 +15,11 @@ interface AttendanceRecord {
   template: `
     <ion-header>
       <ion-toolbar color="primary">
-        <ion-title>Historial de Asistencia</ion-title>
+        <ion-title class="title">Historial de Asistencia</ion-title>
         <ion-buttons slot="end">
-          <ion-button (click)="dismissModal()">Cerrar</ion-button>
+          <ion-button (click)="dismissModal()">
+          <ion-icon name="close"></ion-icon>
+          </ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
@@ -50,6 +52,10 @@ interface AttendanceRecord {
     </ion-content>
   `,
   styles: [`
+    .title {
+      font-size: 13px; 
+    } 
+
     .attendance-table {
       width: 100%;
     }
