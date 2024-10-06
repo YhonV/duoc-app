@@ -10,7 +10,6 @@ import { AccordionComponent } from './components/accordion/accordion.component';
 import { QRCodeModule } from 'angularx-qrcode';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { MenuComponent } from './components/menu/menu.component';
-import { BarcodeScanningModalComponent } from './components/accordion/barcode-scanning-modal.component';
 import { AttendanceModalComponent } from './components/accordion/attendance-modal.component';
 
 
@@ -24,7 +23,6 @@ import { AttendanceModalComponent } from './components/accordion/attendance-moda
     AccordionComponent,
     ToolbarComponent,
     MenuComponent,
-    BarcodeScanningModalComponent,
     AttendanceModalComponent
   ],
   exports: 
@@ -36,7 +34,6 @@ import { AttendanceModalComponent } from './components/accordion/attendance-moda
     AccordionComponent,
     ToolbarComponent,
     MenuComponent,
-    BarcodeScanningModalComponent,
     AttendanceModalComponent
   ],
   imports: [

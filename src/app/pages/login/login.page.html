@@ -39,7 +39,7 @@
         mode="ios"
         class="submit"
         [disabled]="form.invalid"
-        (click)="ingresar()">
+        (click)="onSubmit()">
         Ingresar
         <ion-icon slot="end" name="log-in-outline"></ion-icon>
       </ion-button>  
@@ -64,14 +64,15 @@
     </div>
   </div>
   
-  <!-- Mostrar el modal solo si isModalVisible es true -->
-  <app-modal #modal
-  [title]="title"
-  [content]="content"
-  [image]="image"
-  [description]="description"
-  [autoClose]="autoClose"
-  [redirectTo]="redirectTo">
-</app-modal>
+  
   
 </ion-content>
+
+<app-modal #modal
+[title]="title"
+[content]="content"
+[image]="image"
+[description]="description"
+[autoClose]="autoClose"
+[redirectTo]="redirectTo">
+</app-modal>

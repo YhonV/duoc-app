@@ -7,6 +7,8 @@ import { IonicModule, IonicRouteStrategy, MenuController } from '@ionic/angular'
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { QRCodeModule } from 'angularx-qrcode';
+import { AngularFireModule } from '@angular/fire/compat';
+import { environment } from 'src/environments/environment.prod';
 
 @NgModule({
   declarations: [AppComponent],
@@ -14,7 +16,8 @@ import { QRCodeModule } from 'angularx-qrcode';
     BrowserModule, 
     IonicModule.forRoot(), 
     AppRoutingModule,
-    QRCodeModule
+    QRCodeModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig)
   ],
   providers: [
     { 

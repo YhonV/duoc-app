@@ -2,8 +2,8 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ModalComponent } from '../modal/modal.component';
 import { LoadingController, ModalController, Platform } from '@ionic/angular';
 import { BarcodeScanner, LensFacing } from '@capacitor-mlkit/barcode-scanning';
-import { BarcodeScanningModalComponent } from './barcode-scanning-modal.component';
 import { AttendanceModalComponent } from './attendance-modal.component';
+import { BarcodeScanningModalComponent } from 'src/app/pages/assistance-student/barcode-scanning-modal.component';
 
 interface TableData {
   title: string;
