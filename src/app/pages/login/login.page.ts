@@ -44,6 +44,7 @@ export class LoginPage implements OnInit {
       await loading.present();
       await this.firebaseService.signIn(this.form.value as User).then(async res =>{
         this.navCtrl.navigateRoot("/home");
+        console.log(JSON.stringify(res));
       }).catch(error =>{
         let message = 'Ocurrió un error durante el inicio de sesión';
         if(error instanceof FirebaseError){

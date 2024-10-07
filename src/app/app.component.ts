@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
+import { FirebaseService } from './services/firebase.service';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,7 @@ import { MenuController } from '@ionic/angular';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
+  firebaseService = inject(FirebaseService);
   constructor(
     private menuController: MenuController,
     private router: Router
@@ -22,8 +24,8 @@ export class AppComponent {
     this.router.navigate(['/profile']);
   }
 
-  logout() {
-    this.closeMenu();
-    this.router.navigate(['/login']);
+  async logout() {
+      this.closeMenu();
+      const result = await this.firebaseService.logOutUser();
   }
 }

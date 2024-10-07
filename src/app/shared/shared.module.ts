@@ -9,7 +9,6 @@ import { ModalComponent } from './components/modal/modal.component';
 import { AccordionComponent } from './components/accordion/accordion.component';
 import { QRCodeModule } from 'angularx-qrcode';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
-import { MenuComponent } from './components/menu/menu.component';
 import { AttendanceModalComponent } from './components/accordion/attendance-modal.component';
 
 
@@ -22,7 +21,6 @@ import { AttendanceModalComponent } from './components/accordion/attendance-moda
     ModalComponent,
     AccordionComponent,
     ToolbarComponent,
-    MenuComponent,
     AttendanceModalComponent
   ],
   exports: 
@@ -33,7 +31,6 @@ import { AttendanceModalComponent } from './components/accordion/attendance-moda
     ModalComponent,
     AccordionComponent,
     ToolbarComponent,
-    MenuComponent,
     AttendanceModalComponent
   ],
   imports: [

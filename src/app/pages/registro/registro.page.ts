@@ -1,6 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { FirebaseError } from 'firebase/app';
+import { firebaseErrors } from 'src/app/config/constants';
+import { User } from 'src/app/models/user.model';
+import { FirebaseService } from 'src/app/services/firebase.service';
+import { UtilService } from 'src/app/services/utils.service';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 
 @Component({
@@ -18,26 +23,14 @@ export class RegistroPage implements OnInit {
   autoClose: boolean = false;
   redirectTo: string = '';
 
-  // Validador personalizado para las contraseñas
-  validarPass: ValidatorFn = (formGroup: AbstractControl): { [key: string]: boolean } | null => {
-    const password = formGroup.get('password')?.value;
-    const confirmPassword = formGroup.get('confirmPassword')?.value;
+  firebaseService = inject(FirebaseService);
+  utilService = inject(UtilService);
 
-    return password && confirmPassword && password !== confirmPassword
-      ? { mismatch: true }
-      : null;
-  };
+  constructor(private router: Router) {}
 
+  ngOnInit() {}
 
-  registerForm = new FormGroup({
-    name: new FormControl('', [Validators.required]),
-    rut: new FormControl('', [Validators.required]),
-    phone: new FormControl('', [Validators.required, this.validarPhone()]),
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
-    confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6)]),
-  }, { validators: this.validarPass });
-
+  // ============== Metodos para validaciones del formulario ============== //
 
   validarRut(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
@@ -49,6 +42,16 @@ export class RegistroPage implements OnInit {
       return esValido ? null : { rutInvalido: true };
     }  
   }
+
+  // Validador personalizado para las contraseñas
+  validarPass: ValidatorFn = (formGroup: AbstractControl): { [key: string]: boolean } | null => {
+    const password = formGroup.get('password')?.value;
+    const confirmPassword = formGroup.get('confirmPassword')?.value;
+
+    return password && confirmPassword && password !== confirmPassword
+      ? { mismatch: true }
+      : null;
+  };
   
   validarPhone(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
@@ -60,20 +63,71 @@ export class RegistroPage implements OnInit {
       return esValido ? null : { phoneInvalido: true };
     };
   }
-  
 
-  
-
-  // Método para filtrar la entrada de caracteres en el campo de teléfono
   filtrarPhone(event: any): void {
     const input = event.target;
     input.value = input.value.replace(/[^0-9]/g, '');
   }
 
-  constructor(private router: Router) {}
+  registerForm = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    rut: new FormControl('', [Validators.required]),
+    phone: new FormControl('', [Validators.required, this.validarPhone()]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6)]),
+  }, { validators: this.validarPass });
 
-  ngOnInit() {}
+ 
 
+  async onSubmit() {
+    if (this.registerForm.valid) {
+      const loading = await this.utilService.loading();
+      await loading.present();
+  
+      try {
+        const res = await this.firebaseService.signUp(this.registerForm.value as User);
+        await this.firebaseService.updateUser(this.registerForm.value.name);
+  
+        await loading.dismiss();
+  
+        this.openModal(
+          'Registro exitoso',
+          'Tu cuenta ha sido creada exitosamente',
+          'assets/icon/check.png',
+          'Serás redirigido a la página de inicio de sesión.',
+          true
+        );
+  
+        setTimeout(() => {
+          this.router.navigate(['/login']);
+        }, 2000); 
+      } catch (error) {
+        await loading.dismiss();
+  
+        let message = 'Ocurrió un error durante el registro';
+        if (error instanceof FirebaseError) {
+          message = firebaseErrors[error.code] || message;
+        }
+  
+        this.openModal(
+          'Error',
+          message,
+          'assets/icon/error.jpg',
+          'Por favor, inténtalo de nuevo.',
+          true
+        );
+      }
+    }
+  }
+
+
+
+
+
+
+  // ============== Metodos para el modal ============== //
+  
   // Función para abrir el modal con los datos adecuados
   openModal(title: string, content: string, image: string, description: string, autoClose: boolean) {
     this.title = title;
@@ -109,31 +163,5 @@ export class RegistroPage implements OnInit {
     }
   }
 
-  // Función para manejar la creación de cuenta
-  crearCuenta() {
-    if (this.registerForm.valid) {
-      this.openModal(
-        'Cuenta creada',
-        'Tu cuenta ha sido creada exitosamente.',
-        'assets/icon/check.png',
-        'Serás redirigido al inicio de sesión en unos segundos.',
-        true
-      );
-      this.redirectTo = '/login';
-    } else {
-      this.openModal(
-        'Error',
-        'No se pudo crear la cuenta. Por favor, inténtalo de nuevo.',
-        'assets/icon/error.png',
-        '',
-        false
-      );
-      this.redirectTo = '';
-    }
-  }
 
-  onSubmit() {
-    console.log(this.registerForm.value);
-    this.crearCuenta();
-  }
 }

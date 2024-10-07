@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { FirebaseService } from 'src/app/services/firebase.service';
 
 @Component({
   selector: 'app-home',
@@ -6,11 +8,27 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-  userRole: string = '';  // Variable para almacenar el rol del usuario
+  currentUser: string = '';
+  private userSubscription: Subscription;
 
-  constructor() {}
+  constructor(private firebaseService: FirebaseService) {}
 
   ngOnInit() {
+    this.userSubscription = this.firebaseService.getUser().subscribe(
+      user => {
+        this.currentUser = user ? user.displayName : '';
+      },
+      error => {
+        console.error('Error fetching user data:', error);
+      }
+    );
   }
+
+  ngOnDestroy() {
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
+  }
+
 }
 
