@@ -4,6 +4,8 @@ import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, up
 import { User } from '../models/user.model';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Preferences } from '@capacitor/preferences';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -16,14 +18,14 @@ export class FirebaseService {
   router = inject(Router);
 
   constructor() { 
-    this.auth.authState.subscribe(user => {
+    this.auth.authState.subscribe(async user => {
       if (user) {
         this.userDataSubject.next(user);
-        localStorage.setItem('user', JSON.stringify(user));
+        await Preferences.set({ key: 'user', value: JSON.stringify(user) });
         console.log(`User logged: ${user.displayName}`);
       } else {
         this.userDataSubject.next(null);
-        localStorage.removeItem('user');
+        await Preferences.remove({ key: 'user' });
         console.log('No user');
       }
     })
@@ -49,7 +51,7 @@ export class FirebaseService {
   async logOutUser() {
     try {
       await this.auth.signOut();
-      localStorage.removeItem('user');
+      await Preferences.remove({ key: 'user' });
       this.router.navigate(['/login']);
       console.log(`Se cerró la sesión del user ${this.userDataSubject.value.displayName}`);
       return true;
@@ -63,11 +65,18 @@ export class FirebaseService {
     return this.userData$;
   }
 
-  getUserDisplayName(): string | null {
+  async getUserDisplayName(): Promise<string | null> {
     const userData = this.userDataSubject.value;
-    return userData ? userData.displayName : null;
+    if (userData) {
+      return userData.displayName;
+    } else {
+      const { value } = await Preferences.get({key: 'user'});
+      if (value) {
+        const user = JSON.parse(value);
+        return user.displayName;
+      }
+      return null;
+    }
   }
-
-
   
 }
