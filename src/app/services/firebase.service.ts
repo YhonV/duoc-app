@@ -83,5 +83,33 @@ export class FirebaseService {
       return null;
     }
   }
+
+  async getUserEmail(): Promise<string | null> {
+    const userData = this.userDataSubject.value;
+    if (userData) {
+      return userData.email;
+    } else {
+      const { value } = await Preferences.get({key: 'user'});
+      if (value) {
+        const user = JSON.parse(value);
+        return user.email;
+      }
+      return null;
+    }
+  }
+
+  async getUserPhoneNumber(): Promise<string | null> {
+    const userData = this.userDataSubject.value;
+    if (userData) {
+      return userData.phoneNumber;
+    } else {
+      const { value } = await Preferences.get({key: 'user'});
+      if (value) {
+        const user = JSON.parse(value);
+        return user.phoneNumber;
+      }
+      return null;
+    }
+  }
   
 }

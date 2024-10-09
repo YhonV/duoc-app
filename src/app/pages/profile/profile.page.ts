@@ -1,5 +1,7 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
+import { User } from 'firebase/auth';
 import { FirebaseService } from 'src/app/services/firebase.service';
+import { UtilService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-profile',
@@ -8,24 +10,29 @@ import { FirebaseService } from 'src/app/services/firebase.service';
 })
 export class ProfilePage implements OnInit {
 
-  @Input() username: string = 'Jorge Videla';
-  @Input() email: string = 'jorge.videla@profesorduoc.cl';
-  @Input() phone: string = '+569 1234 5678';
-  @Input() headquarters : string = 'Sede Maipú';
-
   firebaseService = inject(FirebaseService);
+  utilService = inject(UtilService);
 
-  user = this.firebaseService.getUserDisplayName();
+
+  user: any;
+  @Input() name: string;
+  @Input() email: string;
+  @Input() phone: string;
+  @Input() headquarters: string = 'Sede Maipú';
 
   constructor() { }
 
-  ngOnInit() {
-    console.log(this.user);
+  async ngOnInit() {
+    try {
+      this.name = await this.firebaseService.getUserDisplayName();
+      this.email = await this.firebaseService.getUserEmail();
+      this.phone = await this.firebaseService.getUserPhoneNumber();
+      console.log('Datos del usuario cargados:', { name: this.name, email: this.email, phone: this.phone });
+    } catch (error) {
+      console.error('Error al obtener los datos del usuario:', error);
+    }
   }
-
-
 
   
 
- 
 }
