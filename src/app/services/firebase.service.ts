@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, updatePhoneNumber, updateProfile } from 'firebase/auth';
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, updatePhoneNumber, updateProfile, sendPasswordResetEmail } from 'firebase/auth';
 import { User } from '../models/user.model';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -59,6 +59,11 @@ export class FirebaseService {
       console.error('Error al cerrar sesión en FirebaseService', error);
       throw error;
     }
+  }
+
+  // Resetear contraseña
+  sendRecorveryEmail(email: string){
+    return sendPasswordResetEmail(getAuth(), email);
   }
 
   getUser(): Observable<any> {
