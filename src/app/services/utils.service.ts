@@ -11,17 +11,19 @@ export class UtilService {
   loadingCtrl = inject(LoadingController);
 
 
-  async takePicture() {
+  async takePicture(promptLabelHeader: string){ 
     return await Camera.getPhoto({
       quality: 90,
       allowEditing: true,
       resultType: CameraResultType.DataUrl,
       source: CameraSource.Prompt,
-      promptLabelHeader: 'Selecciona una opción',
+      promptLabelHeader,
       promptLabelPhoto: 'Selecciona una imagen',
       promptLabelPicture: 'Toma una foto'
     });
   };
+
+  
 
   loading(){
     return this.loadingCtrl.create({

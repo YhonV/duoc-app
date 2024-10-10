@@ -3,14 +3,20 @@
   flex-direction: column;
   align-items: center;
   padding-top: 20px;
-}
-.large-avatar {
-  width: 120px;
-  height: 120px;
-  margin-bottom: 16px;
-  border: 4px solid var(--ion-color-light);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
+
+  .avatar-container {
+    position: relative;
+    margin-bottom: 16px;
+  }
+
+  .large-avatar {
+    width: 120px;
+    height: 120px;
+    border: 4px solid var(--ion-color-light);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    overflow: visible;
+  }
+
 .username {
   font-size: 24px;
   font-weight: bold;
@@ -43,3 +49,85 @@ ion-button {
   margin-top: 24px;
   --border-radius: 10px;
 }
+
+.avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--ion-color-light);
+  
+  ion-icon {
+    font-size: 48px;
+    color: var(--ion-color-medium);
+  }
+}
+
+.avatar-container {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.large-avatar {
+  width: 120px;
+  height: 120px;
+  border: 4px solid var(--ion-color-light);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  overflow: hidden; // Asegura que el contenido se recorte en círculo
+  
+  .avatar-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--ion-color-light);
+    border-radius: 50%; // Hace que el placeholder sea circular
+    
+    ion-icon {
+      font-size: 48px;
+      color: var(--ion-color-medium);
+      margin: 0;        // Elimina cualquier margen
+      padding: 0;       // Elimina cualquier padding
+      display: flex;    // Asegura que el ícono use flex
+      align-items: center;
+      justify-content: center;
+      position: absolute; // Posicionamiento absoluto
+      top: 50%;          // Coloca en el centro vertical
+      left: 50%;         // Coloca en el centro horizontal
+      transform: translate(-50%, -50%); // Ajusta la posición para centrar perfectamente
+    }
+  }
+}
+
+.change-image-button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  --padding-start: 0;
+  --padding-end: 0;
+  width: 32px;
+  height: 32px;
+  --border-radius: 50%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  ion-icon {
+    font-size: 18px;
+    color: var(--ion-color-light);
+    margin: 0;
+  }
+}
+
+}
+
+
+  
+
+  
+
+  
+

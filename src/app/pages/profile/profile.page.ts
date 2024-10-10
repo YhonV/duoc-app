@@ -1,4 +1,5 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from 'firebase/auth';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilService } from 'src/app/services/utils.service';
@@ -15,10 +16,13 @@ export class ProfilePage implements OnInit {
 
 
   user: any;
-  @Input() name: string;
-  @Input() email: string;
-  @Input() phone: string;
-  @Input() headquarters: string = 'Sede Maipú';
+  name: string;
+  email: string;
+  phone: string;
+  image: string | null = null;;
+  headquarters: string = 'Sede Maipú';
+
+
 
   constructor() { }
 
@@ -32,6 +36,13 @@ export class ProfilePage implements OnInit {
       console.error('Error al obtener los datos del usuario:', error);
     }
   }
+
+  async takeImage(){
+    const dataUrl = (await this.utilService.takePicture('Imagen de perfil')).dataUrl;
+    this.image = dataUrl;
+  }
+
+  
 
   
 

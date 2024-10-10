@@ -2,9 +2,21 @@
   <app-header title="Perfil" [showBackButton]="true"></app-header>
   <app-toolbar></app-toolbar>
   <div class="profile-container ion-padding">
-    <ion-avatar class="large-avatar">
-      <img src="assets/icon/avatar.jpg">
-    </ion-avatar>
+    <div class="avatar-container">
+      <ion-avatar class="large-avatar">
+        <ng-container *ngIf="image; else noImage">
+          <img [src]="image" alt="User Image">
+        </ng-container>
+        <ng-template #noImage>
+          <div class="avatar-placeholder">
+            <ion-icon name="person"></ion-icon>
+          </div>
+        </ng-template>
+      </ion-avatar>
+      <ion-button class="change-image-button" (click)="takeImage()">
+        <ion-icon slot="icon-only" name="camera"></ion-icon>
+      </ion-button>  
+    </div>
     <h2 class="username">{{ name }}</h2>
     <ion-card>
       <ion-card-content>
