@@ -111,5 +111,9 @@ export class FirebaseService {
       return null;
     }
   }
+
+  getAuth(){
+    return getAuth();
+  }
   
 }
