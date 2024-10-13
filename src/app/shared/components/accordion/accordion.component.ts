@@ -28,7 +28,6 @@ export class AccordionComponent implements OnInit {
   @ViewChild('modal') modal!: ModalComponent;
   @Input() warning: string = '';
   scanResult = '';
-
   selectedClass: string = '';
   selectedQRImage: string = '';
 

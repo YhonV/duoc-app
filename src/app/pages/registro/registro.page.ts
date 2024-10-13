@@ -43,7 +43,6 @@ export class RegistroPage implements OnInit {
     }  
   }
 
-  // Validador personalizado para las contraseñas
   validarPass: ValidatorFn = (formGroup: AbstractControl): { [key: string]: boolean } | null => {
     const password = formGroup.get('password')?.value;
     const confirmPassword = formGroup.get('confirmPassword')?.value;
@@ -77,6 +76,7 @@ export class RegistroPage implements OnInit {
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
     confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    role: new FormControl(''),
   }, { validators: this.validarPass });
 
  
@@ -87,6 +87,11 @@ export class RegistroPage implements OnInit {
       await loading.present();
   
       try {
+        if(this.registerForm.value.email.includes('profesor')){
+          this.registerForm.controls.role.setValue('Profesor');
+        }else{
+          this.registerForm.controls.role.setValue('Estudiante');
+        }
         const res = await this.firebaseService.signUp(this.registerForm.value as User);
 
         let uid = res.user.uid;
@@ -131,6 +136,7 @@ export class RegistroPage implements OnInit {
   
       let path = `users/${uid}`;
       delete this.registerForm.value.password;
+      delete this.registerForm.value.confirmPassword;
   
       try {
         await this.firebaseService.setDocument(path, this.registerForm.value);

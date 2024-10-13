@@ -11,7 +11,7 @@ export class HomePage implements OnInit {
   currentUser: string = '';
   private userSubscription: Subscription;
   firebaseServce = inject(FirebaseService);
-  role = this.firebaseServce.role;
+  role : string = '';
 
   constructor(private firebaseService: FirebaseService) {}
 
@@ -19,6 +19,7 @@ export class HomePage implements OnInit {
     this.userSubscription = this.firebaseService.getUser().subscribe(
       user => {
         this.currentUser = user ? user.name : '';
+        this.role = user ? user.role : '';
       },
       error => {
         console.error('Error fetching user data:', error);
