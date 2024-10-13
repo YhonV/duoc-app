@@ -10,13 +10,15 @@ import { FirebaseService } from 'src/app/services/firebase.service';
 export class HomePage implements OnInit {
   currentUser: string = '';
   private userSubscription: Subscription;
+  firebaseServce = inject(FirebaseService);
+  role = this.firebaseServce.role;
 
   constructor(private firebaseService: FirebaseService) {}
 
   ngOnInit() {
     this.userSubscription = this.firebaseService.getUser().subscribe(
       user => {
-        this.currentUser = user ? user.displayName : '';
+        this.currentUser = user ? user.name : '';
       },
       error => {
         console.error('Error fetching user data:', error);

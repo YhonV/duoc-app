@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth-guard.guard';
+import { noAuthGuard } from './guards/no-auth.guard';
 
 const routes: Routes = [
   {
@@ -10,6 +12,7 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+    // canActivate: [noAuthGuard]
   },
   {
     path: 'registro',
@@ -21,26 +24,28 @@ const routes: Routes = [
   },
   {
     path: 'assistance',
-    loadChildren: () => import('./pages/assistance/assistance.module').then( m => m.AssistancePageModule)
+    loadChildren: () => import('./pages/assistance/assistance.module').then( m => m.AssistancePageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'home',
-    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
-  },
-  {
-    path: 'home',
-    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'profile',
-    loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
+    loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'schedule',
-    loadChildren: () => import('./pages/schedule/schedule.module').then( m => m.SchedulePageModule)
-  },  {
+    loadChildren: () => import('./pages/schedule/schedule.module').then( m => m.SchedulePageModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'assistance-student',
-    loadChildren: () => import('./pages/assistance-student/assistance-student.module').then( m => m.AssistanceStudentPageModule)
+    loadChildren: () => import('./pages/assistance-student/assistance-student.module').then( m => m.AssistanceStudentPageModule),
+    canActivate: [AuthGuard]
   },
 
 

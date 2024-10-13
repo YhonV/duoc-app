@@ -1,6 +1,5 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { User } from 'firebase/auth';
+import { Component, inject, OnInit } from '@angular/core';
+import { Preferences } from '@capacitor/preferences';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilService } from 'src/app/services/utils.service';
 
@@ -14,24 +13,26 @@ export class ProfilePage implements OnInit {
   firebaseService = inject(FirebaseService);
   utilService = inject(UtilService);
 
-
-  user: any;
   name: string;
   email: string;
   phone: string;
-  image: string | null = null;;
+  image: string | null = null;
+  rut: string | null = null;
   headquarters: string = 'Sede Maipú';
-
-
 
   constructor() { }
 
   async ngOnInit() {
     try {
-      this.name = await this.firebaseService.getUserDisplayName();
-      this.email = await this.firebaseService.getUserEmail();
-      this.phone = await this.firebaseService.getUserPhoneNumber();
-      console.log('Datos del usuario cargados:', { name: this.name, email: this.email, phone: this.phone });
+      const { value } = await Preferences.get({ key: 'userDoc' });
+      const userDoc = value ? JSON.parse(value) : null;
+      console.log('userDoc:', userDoc);
+      if( userDoc ){
+        this.name = userDoc.username;
+        this.email = userDoc.email;
+        this.phone = userDoc.phone;
+        this.rut = userDoc.rut;
+      }
     } catch (error) {
       console.error('Error al obtener los datos del usuario:', error);
     }

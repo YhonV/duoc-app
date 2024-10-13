@@ -7,6 +7,7 @@ import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilService } from 'src/app/services/utils.service';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { firebaseErrors } from '../../config/constants';
+import { Preferences } from '@capacitor/preferences';
 
 @Component({
   selector: 'app-login',
@@ -33,7 +34,7 @@ export class LoginPage implements OnInit {
   utilService = inject(UtilService);
   navCtrl = inject(NavController); 
 
-  // constructor(private router: Router) {}
+  constructor() {}
 
   ngOnInit() {
   }
@@ -44,7 +45,7 @@ export class LoginPage implements OnInit {
       await loading.present();
       await this.firebaseService.signIn(this.form.value as User).then(async res =>{
         this.navCtrl.navigateRoot("/home");
-        console.log(JSON.stringify(res));
+        await this.getUserToFirestore(res.user.uid);
       }).catch(error =>{
         let message = 'Ocurrió un error durante el inicio de sesión';
         if(error instanceof FirebaseError){
@@ -69,6 +70,55 @@ export class LoginPage implements OnInit {
       this.modal.close();
     }
   }
+  
+  openModal(title: string, content: string, image: string, description: string, isVisible: boolean) {
+    this.title = title;
+    this.content = content;
+    this.image = image;
+    this.description = description;
+    this.isModalVisible = isVisible;
+    
+    setTimeout(() => {
+      if (this.modal) {
+        this.modal.open();
+      } else {
+        console.error('Modal component not found');
+      }
+    });
+  }
+
+  async getUserToFirestore(uid: string) {
+    if (this.form.valid) {
+      const loading = await this.utilService.loading();
+      await loading.present();
+      
+      let path = `users/${uid}`;
+      let userDoc : User | null = null;
+      try {
+        const docData = await this.firebaseService.getDocument(path);
+        console.log('docData:', docData);
+        if(docData){
+          userDoc = {
+            uid: uid,
+            email: docData['email'],
+            name: docData['name'],
+            phone: docData['phone'],
+            rut: docData['rut'],
+          };
+          await Preferences.set({
+            key: 'userDoc',
+            value: JSON.stringify(userDoc),
+          });
+        }
+      } catch (error) {
+        console.error('Error al obtener el usuario de Firestore', error);
+      } finally {
+        await loading.dismiss();
+      }
+    }
+  }
+
+
   // ingresar() {
   //   const emailValue = this.form.get('email')?.value;
   //   const passwordValue = this.form.get('password')?.value;
@@ -91,20 +141,6 @@ export class LoginPage implements OnInit {
   //   }
   // }
   
-  openModal(title: string, content: string, image: string, description: string, isVisible: boolean) {
-    this.title = title;
-    this.content = content;
-    this.image = image;
-    this.description = description;
-    this.isModalVisible = isVisible;
-    
-    setTimeout(() => {
-      if (this.modal) {
-        this.modal.open();
-      } else {
-        console.error('Modal component not found');
-      }
-    });
-  }
+
   
 }

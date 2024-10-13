@@ -70,6 +70,7 @@ export class RegistroPage implements OnInit {
   }
 
   registerForm = new FormGroup({
+    uid: new FormControl(''),
     name: new FormControl('', [Validators.required]),
     rut: new FormControl('', [Validators.required]),
     phone: new FormControl('', [Validators.required, this.validarPhone()]),
@@ -87,10 +88,13 @@ export class RegistroPage implements OnInit {
   
       try {
         const res = await this.firebaseService.signUp(this.registerForm.value as User);
-        await this.firebaseService.updateUser(this.registerForm.value.name);
-  
+
+        let uid = res.user.uid;
+        this.registerForm.controls.uid.setValue(uid);
+
+        this.setUserToFirestore(uid);
+
         await loading.dismiss();
-  
         this.openModal(
           'Registro exitoso',
           'Tu cuenta ha sido creada exitosamente',
@@ -109,7 +113,6 @@ export class RegistroPage implements OnInit {
         if (error instanceof FirebaseError) {
           message = firebaseErrors[error.code] || message;
         }
-  
         this.openModal(
           'Error',
           message,
@@ -121,10 +124,23 @@ export class RegistroPage implements OnInit {
     }
   }
 
-
-
-
-
+  async setUserToFirestore(uid: string) {
+    if (this.registerForm.valid) {
+      const loading = await this.utilService.loading();
+      await loading.present();
+  
+      let path = `users/${uid}`;
+      delete this.registerForm.value.password;
+  
+      try {
+        await this.firebaseService.setDocument(path, this.registerForm.value);
+      } catch (error) {
+        console.error('Error al guardar el usuario en Firestore', error);
+      } finally {
+        await loading.dismiss();
+      }
+    }
+  }
 
   // ============== Metodos para el modal ============== //
   
@@ -151,7 +167,7 @@ export class RegistroPage implements OnInit {
         if (this.redirectTo) {
           this.router.navigate([this.redirectTo]);
         }
-      }, 3000); // Redirigir después de 3 segundos
+      }, 3000);
     }
   }
 

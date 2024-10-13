@@ -5,6 +5,8 @@ import { User } from '../models/user.model';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Preferences } from '@capacitor/preferences';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { getFirestore, setDoc, doc, getDoc} from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -13,24 +15,28 @@ export class FirebaseService {
 
   private userDataSubject: BehaviorSubject<any> = new BehaviorSubject(null);
   userData$: Observable<any> = this.userDataSubject.asObservable();
-
+  role: string = '';
+  firestore = inject(AngularFirestore);
   auth = inject(AngularFireAuth);
   router = inject(Router);
 
   constructor() { 
     this.auth.authState.subscribe(async user => {
       if (user) {
-        this.userDataSubject.next(user);
-        await Preferences.set({ key: 'user', value: JSON.stringify(user) });
+        const userDoc = await this.getDocument(`users/${user.uid}`);
+        this.userDataSubject.next(userDoc);
+        await Preferences.set({ key: 'user', value: JSON.stringify(userDoc) });
         console.log(`User logged: ${user.displayName}`);
+        console.log(this.role);
       } else {
         this.userDataSubject.next(null);
         await Preferences.remove({ key: 'user' });
         console.log('No user');
       }
-    })
+    });
   }
 
+  // ==================== AUTENTICACION ==================== // 
 
   // Login de usuario
   signIn(user : User){
@@ -39,12 +45,10 @@ export class FirebaseService {
 
   // Registro de usuarios
   signUp(user:User){
-      return createUserWithEmailAndPassword(getAuth(), user.email, user.password);
-  }
-
-  // No sé la verdad si es actualizar el nombre o qué jasdjajd
-  updateUser(displayName: string){
-      return updateProfile(getAuth().currentUser, { displayName });
+    if(user.email.includes('profesor')){
+      this.role = 'profesor';
+    }
+    return createUserWithEmailAndPassword(getAuth(), user.email, user.password);
   }
 
   // Cerrar sesión
@@ -53,7 +57,6 @@ export class FirebaseService {
       await this.auth.signOut();
       await Preferences.remove({ key: 'user' });
       this.router.navigate(['/login']);
-      console.log(`Se cerró la sesión del user ${this.userDataSubject.value.displayName}`);
       return true;
     } catch (error) {
       console.error('Error al cerrar sesión en FirebaseService', error);
@@ -61,59 +64,45 @@ export class FirebaseService {
     }
   }
 
+  getAuth(){
+    return getAuth();
+  }
+
+  // ==================== RECUPERAR CONTRASEÑA ==================== // 
+
   // Resetear contraseña
   sendRecorveryEmail(email: string){
-    return sendPasswordResetEmail(getAuth(), email);
+    try{
+      return sendPasswordResetEmail(getAuth(), email);
+    }catch (error){
+      console.error('Error al enviar el correo de recuperación', error);
+      throw error;
+    }
   }
+
+  // ==================== OBSERVABLE ==================== // 
 
   getUser(): Observable<any> {
     return this.userData$;
   }
 
-  async getUserDisplayName(): Promise<string | null> {
-    const userData = this.userDataSubject.value;
-    if (userData) {
-      return userData.displayName;
-    } else {
-      const { value } = await Preferences.get({key: 'user'});
-      if (value) {
-        const user = JSON.parse(value);
-        return user.displayName;
-      }
-      return null;
+  // ==================== FIRESTORE ==================== // 
+  setDocument(path: string, data:any){
+    try{
+      return setDoc(doc(getFirestore(), path), data);
+    }catch (error){
+      console.error('Error al guardar el documento en Firestore', error);
+      throw error;
     }
   }
 
-  async getUserEmail(): Promise<string | null> {
-    const userData = this.userDataSubject.value;
-    if (userData) {
-      return userData.email;
-    } else {
-      const { value } = await Preferences.get({key: 'user'});
-      if (value) {
-        const user = JSON.parse(value);
-        return user.email;
-      }
-      return null;
+  async getDocument(path: string){
+    try{
+      return (await getDoc(doc(getFirestore(), path))).data();
+    }catch (error){
+      console.error('Error al obtener el documento de Firestore', error);
+      throw error;
     }
-  }
-
-  async getUserPhoneNumber(): Promise<string | null> {
-    const userData = this.userDataSubject.value;
-    if (userData) {
-      return userData.phoneNumber;
-    } else {
-      const { value } = await Preferences.get({key: 'user'});
-      if (value) {
-        const user = JSON.parse(value);
-        return user.phoneNumber;
-      }
-      return null;
-    }
-  }
-
-  getAuth(){
-    return getAuth();
-  }
+ }
   
 }
