@@ -16,7 +16,7 @@ export class noAuthGuard implements CanActivate {
       onAuthStateChanged(auth, (user) => {
         if (user) {
           console.log('User is logged in, navigating to home');
-          this.router.navigate(['home']).then(() => resolve(false));
+          this.router.navigate(['home'])
         } else {
           console.log('User is not logged in, allowing access');
           resolve(true);
