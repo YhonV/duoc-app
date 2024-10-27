@@ -1,5 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
+import { FirebaseAuthentication } from '@capacitor-firebase/authentication';
 import { Subscription } from 'rxjs';
+import { meses } from 'src/app/config/constants';
 import { FirebaseService } from 'src/app/services/firebase.service';
 
 @Component({
@@ -7,15 +10,26 @@ import { FirebaseService } from 'src/app/services/firebase.service';
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
 })
+
+
+
 export class HomePage implements OnInit {
   currentUser: string = '';
   private userSubscription: Subscription;
   firebaseServce = inject(FirebaseService);
   role : string = '';
+  mesActual: number = 0;
+  nombreMesActual: string = '';
 
-  constructor(private firebaseService: FirebaseService) {}
+  
+  
+  festivosMesActual: Array<{ date: string; title: string }> = [];
+  Object = Object;
+
+  constructor(private http:HttpClient, private firebaseService: FirebaseService) {}
 
   ngOnInit() {
+    this.mostrarDiasFestivos();
     this.userSubscription = this.firebaseService.getUser().subscribe(
       user => {
         this.currentUser = user ? user.name : '';
@@ -32,6 +46,33 @@ export class HomePage implements OnInit {
       this.userSubscription.unsubscribe();
     }
   }
+
+  async mostrarDiasFestivos() {
+    const token = await FirebaseAuthentication.getIdToken();
+    console.log('Token:', token);
+
+    this.http.get<{ status: string, data: Array<{ date: string, title: string }> }>('https://api.boostr.cl/holidays.json').subscribe({
+      next: response => {
+        const fechaActual = new Date();
+        this.mesActual = fechaActual.getMonth(); 
+        if (this.mesActual in meses){
+          this.nombreMesActual = meses[this.mesActual];
+        }
+
+        const anioActual = fechaActual.getFullYear();
+
+        // Filtramos los festivos que correspondan al mes y año actual
+        this.festivosMesActual = response.data.filter(dia => {
+          const fechaFestivo = new Date(dia.date);
+          return fechaFestivo.getMonth() === this.mesActual && fechaFestivo.getFullYear() === anioActual;
+        });
+      },
+      error: error => {
+        console.error('error:', error);
+      }
+    });
+}
+
 
 }
 

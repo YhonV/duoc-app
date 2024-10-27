@@ -5,6 +5,24 @@
     <app-logo class="d-flex-center"></app-logo>
     <h3 class="welcome-text">¡Bienvenido {{currentUser}}!</h3>
 
+    
+    <ion-card *ngIf="festivosMesActual && festivosMesActual.length > 0" mode="ios" class="custom-card">
+      <ion-card-header>
+        <ion-card-subtitle>Feriados {{nombreMesActual}}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item *ngFor="let festivo of festivosMesActual">
+            <ion-label>
+              <h4>{{ festivo.title }}</h4>
+              <p>{{ festivo.date | date: 'longDate' }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+
     <ion-card mode="ios" class="custom-card">
       <img alt="Imagen Perfil" src="assets/icon/perfil.jpg" />
       <ion-card-header>
@@ -58,6 +76,8 @@
         Registrar tu asistencia nunca fue tan fácil.
       </ion-card-content>
     </ion-card>
+
+    
 
   </div>
 </ion-content>
