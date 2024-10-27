@@ -119,28 +119,5 @@ export class LoginPage implements OnInit {
   }
 
 
-  // ingresar() {
-  //   const emailValue = this.form.get('email')?.value;
-  //   const passwordValue = this.form.get('password')?.value;
-  
-  //   if (emailValue === 'admin@gmail.com' && passwordValue === 'admin123') {
-  //     this.autenticacionService.setUserRole('admin');  // Establecer rol como admin
-  //     this.router.navigate(['/home']);
-  //   } else if (emailValue === 'student@gmail.com' && passwordValue === 'student123') {
-  //     this.autenticacionService.setUserRole('student');  // Establecer rol como estudiante
-  //     this.router.navigate(['/home']);
-  //   } else {
-  //     this.openModal(
-  //       'Error',
-  //       'Usuario incorrecto o no autorizado.',
-  //       'assets/icon/error.jpg',
-  //       'Por favor, inténtalo de nuevo.',
-  //       true
-  //     );
-  //     this.closeModal();
-  //   }
-  // }
-  
-
   
 }

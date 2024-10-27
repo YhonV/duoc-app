@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { LoadingController, ModalController, Platform } from '@ionic/angular';
 import { BarcodeScanningModalComponent } from './barcode-scanning-modal.component';
 import { LensFacing } from '@capacitor-mlkit/barcode-scanning';
+import { HttpClient } from '@angular/common/http';
+import { FirebaseAuthentication } from '@capacitor-firebase/authentication';
 
 @Component({
   selector: 'app-assistance-student',
@@ -12,8 +14,7 @@ export class AssistanceStudentPage implements OnInit {
 
   scanResult = '';
   constructor(
-    private loadingController: LoadingController,
-    private platform: Platform,
+    private http:HttpClient,
     private modalController: ModalController
   ) { }
 
@@ -63,5 +64,51 @@ export class AssistanceStudentPage implements OnInit {
       this.scanResult = data?.barcode?.displayValue;
     }
   }
+
+  async mostrarDatos(){
+    const token = await FirebaseAuthentication.getIdToken();
+    console.log('token:', token);
+    const api = this.http.get('https://pgy4121serverlessapi.vercel.app/api/cuenta/',{
+      headers: {
+        Authorization: `Bearer ${token.token}`
+      }
+    }).subscribe(
+      {
+        next: data => {
+          console.log('data:', data);
+        },
+        error: error => {
+          console.error('error:', error);
+        }
+      }
+    )
+    console.log('api:', api);
+  }
+
+  async registrarAsistencia(seccion: string = 'MP003', code: string = '123456'){
+    const token = await FirebaseAuthentication.getIdToken();
+    console.log('token:', token);
+    const api = this.http.post('https://pgy4121serverlessapi.vercel.app/api/asistencia/qr/',
+      {
+        seccion: seccion,
+        code: code
+      },
+      {
+      headers: {
+        Authorization: `Bearer ${token.token}`
+      }
+      }
+    ).subscribe({
+      next: data => {
+        console.log('data:', data);
+      },
+      error: error => {
+        console.error('error:', error);
+      }
+    })
+  }
+  
+  
+  
 
 }

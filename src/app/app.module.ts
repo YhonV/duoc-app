@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { QRCodeModule } from 'angularx-qrcode';
 import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from 'src/environments/environment.prod';
+import { provideHttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,7 +26,8 @@ import { environment } from 'src/environments/environment.prod';
       useClass: IonicRouteStrategy 
     },
     MenuController,
-    RouterModule
+    RouterModule,
+    provideHttpClient()
   ],
   bootstrap: [AppComponent],
 })
