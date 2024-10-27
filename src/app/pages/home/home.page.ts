@@ -24,7 +24,6 @@ export class HomePage implements OnInit {
   
   
   festivosMesActual: Array<{ date: string; title: string }> = [];
-  Object = Object;
 
   constructor(private http:HttpClient, private firebaseService: FirebaseService) {}
 
@@ -48,24 +47,17 @@ export class HomePage implements OnInit {
   }
 
   async mostrarDiasFestivos() {
-    const token = await FirebaseAuthentication.getIdToken();
-    console.log('Token:', token);
-
     this.http.get<{ status: string, data: Array<{ date: string, title: string }> }>('https://api.boostr.cl/holidays.json').subscribe({
       next: response => {
         const fechaActual = new Date();
-        this.mesActual = fechaActual.getMonth(); 
-        if (this.mesActual in meses){
-          this.nombreMesActual = meses[this.mesActual];
-        }
-
-        const anioActual = fechaActual.getFullYear();
-
-        // Filtramos los festivos que correspondan al mes y año actual
-        this.festivosMesActual = response.data.filter(dia => {
+        const proxFeriados = response.data.filter(dia => {
           const fechaFestivo = new Date(dia.date);
-          return fechaFestivo.getMonth() === this.mesActual && fechaFestivo.getFullYear() === anioActual;
+          return fechaFestivo > fechaActual;
         });
+
+        proxFeriados.sort((a) => new Date(a.date).getTime());
+
+        this.festivosMesActual = proxFeriados.slice(0, 1);
       },
       error: error => {
         console.error('error:', error);

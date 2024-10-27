@@ -6,9 +6,9 @@
     <h3 class="welcome-text">¡Bienvenido {{currentUser}}!</h3>
 
     
-    <ion-card *ngIf="festivosMesActual && festivosMesActual.length > 0" mode="ios" class="custom-card">
+    <ion-card *ngIf="festivosMesActual && festivosMesActual.length > 0" mode="ios" class="custom-card" >
       <ion-card-header>
-        <ion-card-subtitle>Feriados {{nombreMesActual}}</ion-card-subtitle>
+        <ion-card-subtitle class="d-flex-center">🎉 Próximo feriado 🎉</ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>
         <ion-list>
