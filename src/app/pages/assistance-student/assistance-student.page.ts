@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { LoadingController, ModalController, Platform } from '@ionic/angular';
-import { BarcodeScanningModalComponent } from './barcode-scanning-modal.component';
-import { LensFacing } from '@capacitor-mlkit/barcode-scanning';
+import { AlertController, ModalController } from '@ionic/angular';
+import { Barcode, BarcodeScanner, LensFacing } from '@capacitor-mlkit/barcode-scanning';
 import { HttpClient } from '@angular/common/http';
 import { FirebaseAuthentication } from '@capacitor-firebase/authentication';
 
@@ -12,14 +11,14 @@ import { FirebaseAuthentication } from '@capacitor-firebase/authentication';
 })
 export class AssistanceStudentPage implements OnInit {
 
+  isSupported = false;
+  barcodes: Barcode[] = [];
   scanResult = '';
   constructor(
     private http:HttpClient,
-    private modalController: ModalController
   ) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   tableData = [
     { title: 'ARQUITECTURA ASY4131', clase: 'ARQUITECTURA ASY4131', seccion: '003V', qr:'', sala: 'Sala 101', horario: 'Lunes 10:00 - 12:00', esTransversal: false },
@@ -41,28 +40,6 @@ export class AssistanceStudentPage implements OnInit {
 
   mostrarAsignaturas(event: any) {
     this.mostrarTransversales = event.detail.checked;
-  }
-
-  
-
-  async startScanner() {
-    const modal = await this.modalController.create({
-    component: BarcodeScanningModalComponent,
-    cssClass: 'barcode-scanning-modal',
-    showBackdrop: false,
-    componentProps: { 
-      formats: [],
-      LensFacing: LensFacing.Back,
-     }
-    });
-  
-    await modal.present();
-
-    const { data } = await modal.onWillDismiss();
-    
-    if(data){
-      this.scanResult = data?.barcode?.displayValue;
-    }
   }
 
   async mostrarDatos(){
@@ -107,8 +84,4 @@ export class AssistanceStudentPage implements OnInit {
       }
     })
   }
-  
-  
-  
-
 }

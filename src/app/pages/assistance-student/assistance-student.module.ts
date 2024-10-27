@@ -8,7 +8,6 @@ import { AssistanceStudentPageRoutingModule } from './assistance-student-routing
 
 import { AssistanceStudentPage } from './assistance-student.page';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { BarcodeScanningModalComponent } from './barcode-scanning-modal.component';
 
 @NgModule({
   imports: [
@@ -18,6 +17,6 @@ import { BarcodeScanningModalComponent } from './barcode-scanning-modal.componen
     AssistanceStudentPageRoutingModule,
     SharedModule
   ],
-  declarations: [AssistanceStudentPage, BarcodeScanningModalComponent]
+  declarations: [AssistanceStudentPage]
 })
 export class AssistanceStudentPageModule {}

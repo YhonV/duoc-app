@@ -46,7 +46,8 @@ const routes: Routes = [
     path: 'assistance-student',
     loadChildren: () => import('./pages/assistance-student/assistance-student.module').then( m => m.AssistanceStudentPageModule),
     canActivate: [AuthGuard]
-  },
+  }
+
 
 
 

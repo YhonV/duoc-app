@@ -1,9 +1,8 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ModalComponent } from '../modal/modal.component';
-import { LoadingController, ModalController, Platform } from '@ionic/angular';
-import { BarcodeScanner, LensFacing } from '@capacitor-mlkit/barcode-scanning';
+import { AlertController, LoadingController, ModalController, Platform } from '@ionic/angular';
+import { Barcode, BarcodeScanner, LensFacing } from '@capacitor-mlkit/barcode-scanning';
 import { AttendanceModalComponent } from './attendance-modal.component';
-import { BarcodeScanningModalComponent } from 'src/app/pages/assistance-student/barcode-scanning-modal.component';
 
 interface TableData {
   title: string;
@@ -30,11 +29,13 @@ export class AccordionComponent implements OnInit {
   scanResult = '';
   selectedClass: string = '';
   selectedQRImage: string = '';
+  isSupported = false;
+  barcodes: Barcode[] = [];
 
   constructor(
-    private loadingController: LoadingController,
     private platform: Platform,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private alertController: AlertController
   ) {}
 
   ngOnInit() {
@@ -53,27 +54,33 @@ export class AccordionComponent implements OnInit {
     this.modal.modal.present();
   }  
 
-  async startScanner() {
-    const modal = await this.modalController.create({
-    component: BarcodeScanningModalComponent,
-    cssClass: 'barcode-scanning-modal',
-    showBackdrop: false,
-    componentProps: { 
-      formats: [],
-      LensFacing: LensFacing.Back,
-     }
-    });
-  
-    await modal.present();
-
-    const { data } = await modal.onWillDismiss();
-    
-    if(data){
-      this.scanResult = data?.barcode?.displayValue;
+  async startScanner(): Promise<void> {
+    console.log('startScanner');
+    const granted = await this.requestPermissions();
+    if (!granted) {
+      this.presentAlert();
+      return;
     }
+    const { barcodes } = await BarcodeScanner.scan();
+    this.barcodes.push(...barcodes);
   }
 
+  async requestPermissions(): Promise<boolean> {
+    const { camera } = await BarcodeScanner.requestPermissions();
+    return camera === 'granted' || camera === 'limited';
+  }
+
+  async presentAlert(): Promise<void> {
+    const alert = await this.alertController.create({
+      header: 'Permission denied',
+      message: 'Please grant camera permission to use the barcode scanner.',
+      buttons: ['OK'],
+    });
+    await alert.present();
+  }  
+
   async openAttendanceModal(row: TableData) {
+    console.log('openAttendanceModal');
     const modal = await this.modalController.create({
       component: AttendanceModalComponent,
       componentProps: {
