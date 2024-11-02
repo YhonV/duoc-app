@@ -1,7 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ModalComponent } from '../modal/modal.component';
-import { AlertController, LoadingController, ModalController, Platform } from '@ionic/angular';
-import { Barcode, BarcodeScanner, LensFacing } from '@capacitor-mlkit/barcode-scanning';
+import { AlertController, ModalController } from '@ionic/angular';
 import { AttendanceModalComponent } from './attendance-modal.component';
 
 interface TableData {
@@ -29,21 +28,13 @@ export class AccordionComponent implements OnInit {
   scanResult = '';
   selectedClass: string = '';
   selectedQRImage: string = '';
-  isSupported = false;
-  barcodes: Barcode[] = [];
 
   constructor(
-    private platform: Platform,
     private modalController: ModalController,
     private alertController: AlertController
   ) {}
 
   ngOnInit() {
-    if(this.platform.is('capacitor')){
-      BarcodeScanner.isSupported().then();
-      BarcodeScanner.checkPermissions().then();
-      BarcodeScanner.removeAllListeners();
-    }
   }
 
   async openQRModal(row: TableData) {
@@ -52,31 +43,6 @@ export class AccordionComponent implements OnInit {
     this.modal.showQRCode = true;
     this.warning = '** Código válido por 10 minutos **';
     this.modal.modal.present();
-  }  
-
-  async startScanner(): Promise<void> {
-    console.log('startScanner');
-    const granted = await this.requestPermissions();
-    if (!granted) {
-      this.presentAlert();
-      return;
-    }
-    const { barcodes } = await BarcodeScanner.scan();
-    this.barcodes.push(...barcodes);
-  }
-
-  async requestPermissions(): Promise<boolean> {
-    const { camera } = await BarcodeScanner.requestPermissions();
-    return camera === 'granted' || camera === 'limited';
-  }
-
-  async presentAlert(): Promise<void> {
-    const alert = await this.alertController.create({
-      header: 'Permission denied',
-      message: 'Please grant camera permission to use the barcode scanner.',
-      buttons: ['OK'],
-    });
-    await alert.present();
   }  
 
   async openAttendanceModal(row: TableData) {

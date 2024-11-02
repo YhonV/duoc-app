@@ -75,7 +75,10 @@ ion-accordion.accordion-expanded .header-icon {
 }
 
 .attendance-button {
-  float: right;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
   border-color: #ffb800 !important;
   --border-color: #ffb800 !important;
 }
