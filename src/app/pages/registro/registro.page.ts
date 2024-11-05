@@ -110,7 +110,7 @@ export class RegistroPage implements OnInit {
   
         setTimeout(() => {
           this.router.navigate(['/login']);
-        }, 2000); 
+        }, 3000); 
       } catch (error) {
         await loading.dismiss();
   
@@ -132,7 +132,7 @@ export class RegistroPage implements OnInit {
   async setUserToFirestore(uid: string) {
     if (this.registerForm.valid) {
       const loading = await this.utilService.loading();
-      await loading.present();
+      //await loading.present();
   
       let path = `users/${uid}`;
       delete this.registerForm.value.password;
@@ -143,7 +143,7 @@ export class RegistroPage implements OnInit {
       } catch (error) {
         console.error('Error al guardar el usuario en Firestore', error);
       } finally {
-        await loading.dismiss();
+        //await loading.dismiss();
       }
     }
   }
