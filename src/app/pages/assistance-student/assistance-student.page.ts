@@ -64,7 +64,9 @@ export class AssistanceStudentPage implements OnInit {
       path,
       formats: []
     }) 
-
+    if(!barcodes){
+      this.scanResult = 'No QR code found';
+    }
     this.scanResult = barcodes[0]?.displayValue;
   };
 
