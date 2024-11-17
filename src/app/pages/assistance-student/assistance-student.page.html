@@ -17,6 +17,19 @@
         Selecciona un código QR
       </ion-button>
     </div>
+    <ion-button (click)="registrarAsistencia()" expand="block" class="scan-button" fill="outline" color="tertiary">
+      Dale clic no más
+    </ion-button>
     {{scanResult}}
   </div>
 </ion-content>
+
+<app-modal
+#modal
+[title]="title"
+[content]="content"
+[image]="image"
+[description]="description"
+[autoClose]="autoClose"
+[redirectTo]="redirectTo"
+></app-modal>

@@ -6,7 +6,9 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Preferences } from '@capacitor/preferences';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { getFirestore, setDoc, doc, getDoc} from '@angular/fire/firestore';
+import { getFirestore, setDoc, doc, getDoc, addDoc, collection} from '@angular/fire/firestore';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { getStorage, ref, uploadString, getDownloadURL } from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +21,7 @@ export class FirebaseService {
   firestore = inject(AngularFirestore);
   auth = inject(AngularFireAuth);
   router = inject(Router);
+  storage = inject(AngularFireStorage);
 
   constructor() { 
     this.auth.authState.subscribe(async user => {
@@ -104,5 +107,20 @@ export class FirebaseService {
       throw error;
     }
  }
-  
+
+ addAssistance(path: string, data:any){
+  try{
+    return addDoc(collection(getFirestore(), path), data);
+  }catch (error){
+    console.error('Error al guardar el documento en Firestore', error);
+    throw error;
+    }
+  }
+
+  async uploadImage(path: string, data_url: string){
+    return uploadString(ref(getStorage(), path), data_url, 'data_url').then(() =>{
+      return getDownloadURL(ref(getStorage(), path));
+    });
+  }
+
 }
