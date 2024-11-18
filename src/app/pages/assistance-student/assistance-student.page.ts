@@ -50,7 +50,6 @@ export class AssistanceStudentPage implements OnInit {
         const resultadoMarcar = await this.utilService.post<{ success: boolean }>('https://pgy4121serverlessapi.vercel.app/api/asistencia/qr', datos);
         spin.dismiss();
         await this.utilService.mensaje('Resultado:' + resultadoMarcar.success);
-        // this.utilService.go('/', true);
       } catch (error: any) {
         spin.dismiss();
         console.log('error', error);
