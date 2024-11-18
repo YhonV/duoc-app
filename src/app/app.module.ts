@@ -18,7 +18,7 @@ import { provideHttpClient } from '@angular/common/http';
     IonicModule.forRoot(), 
     AppRoutingModule,
     QRCodeModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig)
+    AngularFireModule.initializeApp(environment.firebaseConfig),
   ],
   providers: [
     { 

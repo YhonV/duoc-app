@@ -1,6 +1,9 @@
 import { inject, Injectable } from '@angular/core';
-import { LoadingController, ToastController, ToastOptions } from '@ionic/angular';
+import { AlertController, LoadingController, NavController, ToastController, ToastOptions } from '@ionic/angular';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { lastValueFrom } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +12,11 @@ export class UtilService {
 
   toasCtrl = inject(ToastController);
   loadingCtrl = inject(LoadingController);
+  private http = inject(HttpClient);
+  private alert = inject(AlertController);
+  private nav = inject(NavController);
 
-
+  constructor(private afAuth: AngularFireAuth) { }
   async takePicture(promptLabelHeader: string){ 
     return await Camera.getPhoto({
       quality: 90,
@@ -36,4 +42,32 @@ export class UtilService {
     const toast = await this.toasCtrl.create(opts)
     toast.present();
   }
+
+  async post<T>(url: string, body: any) {
+    const user = await this.afAuth.currentUser;
+    if (!user) {
+      throw new Error('User not authenticated');
+    }
+    const idToken = await user.getIdToken();
+    console.log('idToken', idToken);
+    return lastValueFrom(this.http.post<T>(url, body, {
+      headers: {
+        "Authorization": "Bearer " + idToken
+      }
+    }));
+  }
+
+async mensaje(texto:string){
+  const m = await this.alert.create({
+      message:texto,
+      buttons:['Ok'],
+      translucent:true,
+  })
+  await m.present();
+  await m.onDidDismiss();
+}
+
+async go(url:string,noVolver = false){
+  return this.nav.navigateForward(url,{replaceUrl:noVolver});
+}
 }

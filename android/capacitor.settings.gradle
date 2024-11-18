@@ -5,9 +5,6 @@ project(':capacitor-android').projectDir = new File('../node_modules/@capacitor/
 include ':capacitor-firebase-authentication'
 project(':capacitor-firebase-authentication').projectDir = new File('../node_modules/@capacitor-firebase/authentication/android')
 
-include ':capacitor-mlkit-barcode-scanning'
-project(':capacitor-mlkit-barcode-scanning').projectDir = new File('../node_modules/@capacitor-mlkit/barcode-scanning/android')
-
 include ':capacitor-app'
 project(':capacitor-app').projectDir = new File('../node_modules/@capacitor/app/android')
 
@@ -32,5 +29,5 @@ project(':capacitor-share').projectDir = new File('../node_modules/@capacitor/sh
 include ':capacitor-status-bar'
 project(':capacitor-status-bar').projectDir = new File('../node_modules/@capacitor/status-bar/android')
 
-include ':capawesome-capacitor-file-picker'
-project(':capawesome-capacitor-file-picker').projectDir = new File('../node_modules/@capawesome/capacitor-file-picker/android')
+include ':capacitor-barcode-scanner'
+project(':capacitor-barcode-scanner').projectDir = new File('../node_modules/capacitor-barcode-scanner/android')

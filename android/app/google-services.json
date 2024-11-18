@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1013657341098",
+    "project_id": "duoc-app",
+    "storage_bucket": "duoc-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1013657341098:android:d0c3bd79d6cedf678214d3",
+        "android_client_info": {
+          "package_name": "cl.duoc.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-_HP-EueN1VEQDkY_sLaEtMyo4G91YC8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

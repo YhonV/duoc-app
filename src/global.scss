@@ -130,24 +130,6 @@ ion-button {
     }
 }
 
-body.barcode-scanning-active{
-    visibility: hidden;
-    --background: transparent;
-    --ion-background-color: transparent;
-}
-
-.barcode-scanning-modal{
-    visibility: visible;
-}
-
-@media(prefers-color-scheme: dark){
-    barcode-scanning-active{
-        visibility: hidden;
-        --background: transparent;
-        --ion-background-color: transparent;
-    }
-}
-
 .attendance-modal {
     --width: 90%;
     --height: 90%;
