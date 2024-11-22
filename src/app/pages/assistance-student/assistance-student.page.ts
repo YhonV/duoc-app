@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { FirebaseService } from 'src/app/services/firebase.service';
+import { Seccion } from 'src/app/models/asistencia.model';
 import { User } from 'src/app/models/user.model';
 import { Preferences } from '@capacitor/preferences';
 import { FirebaseAuthentication } from '@capacitor-firebase/authentication';
@@ -76,10 +76,29 @@ export class AssistanceStudentPage implements OnInit {
   ];
 
   async listarAsistencias() {
-    const lista = await this.utilService.get<{}>('https://pgy4121serverlessapi.vercel.app/api/asistencia/listar');
+    try {
+      // Define el tipo de la respuesta como un arreglo de `Seccion`
+      const lista = await this.utilService.get<Seccion[]>('https://pgy4121serverlessapi.vercel.app/api/asistencia/listar');
+      
+      // Devuelve la lista si necesitas usarla en otro lugar
 
-  
+      lista.forEach(seccion => {
+        console.log(`Sección: ${seccion.seccion === 'PruebaYhonv2'}`);
+        seccion.asistencia.forEach(asistencia => {
+          console.log(`Clase ID: ${asistencia.claseId}`);
+          console.log(`Fecha: ${asistencia.fecha}`);
+          console.log(`Asistido: ${asistencia.asistido}`);
+          console.log(`Fecha/Hora: ${asistencia.fechaHora}`);
+        });
+      });
+
+      return lista;
+    } catch (error) {
+      console.error('Error al listar asistencias:', error);
+      throw error; // Manejo del error para el llamador
+    }
   }
+  
 
   // ========= Materias transversales (Toggle) ========= //
 
