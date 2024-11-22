@@ -86,6 +86,7 @@ async openAlert(cabecera: string, msg: string, iconName: string) {
     header: cabecera,
     message: new IonicSafeString(`<ion-icon name="${iconName}" style="font-size: 2em; color: #488aff;"></ion-icon><p>${msg}</p>`),
     buttons: ['Aceptar'],
+    mode: 'ios'
   });
 
   await alert.present();
