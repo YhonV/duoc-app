@@ -67,6 +67,14 @@ async mensaje(texto:string){
   await m.onDidDismiss();
 }
 
-  async openAlert(){}
+  async openAlert(cabecera: string, msg: string) {
+    const alert = await this.alert.create({
+      header: cabecera,
+      message: msg,
+      buttons: ['Aceptar'],
+    });
+
+    await alert.present();
+  }
 
 }

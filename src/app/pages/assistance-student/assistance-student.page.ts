@@ -193,4 +193,8 @@ closeModal() {
 onModalClose() {
   this.closeModal();
 }
+
+  presentAler(){
+    this.utilService.openAlert('Atencion', 'Mensaje recibido exitosamente');
+  }   
 }
