@@ -57,6 +57,20 @@ export class UtilService {
     }));
   }
 
+  async get<T>(url: string) {
+    const user = await this.afAuth.currentUser;
+    if (!user) {
+      throw new Error('User not authenticated');
+    }
+    const idToken = await user.getIdToken();
+    console.log('idToken', idToken);
+    return lastValueFrom(this.http.get<T>(url, {
+      headers: {
+        "Authorization": "Bearer " + idToken
+      }
+    }));
+  }
+
 async mensaje(texto:string){
   const m = await this.alert.create({
       message:texto,

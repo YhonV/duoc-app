@@ -75,6 +75,12 @@ export class AssistanceStudentPage implements OnInit {
     { title: 'INGLES INTERMEDIO INI5111', clase: 'INGLES INTERMEDIO INI5111', seccion: '008V', qr: '', sala: 'Sala 105', horario: 'Martes 13:00 - 15:00', esTransversal: true }
   ];
 
+  async listarAsistencias() {
+    const lista = await this.utilService.get<{}>('https://pgy4121serverlessapi.vercel.app/api/asistencia/listar');
+
+  
+  }
+
   // ========= Materias transversales (Toggle) ========= //
 
   get filteredTableData() {
