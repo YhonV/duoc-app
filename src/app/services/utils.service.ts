@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { AlertController, LoadingController, NavController, ToastController, ToastOptions } from '@ionic/angular';
+import { AlertController, IonicSafeString, LoadingController, NavController, ToastController, ToastOptions } from '@ionic/angular';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { lastValueFrom } from 'rxjs';
@@ -81,14 +81,14 @@ async mensaje(texto:string){
   await m.onDidDismiss();
 }
 
-  async openAlert(cabecera: string, msg: string) {
-    const alert = await this.alert.create({
-      header: cabecera,
-      message: msg,
-      buttons: ['Aceptar'],
-    });
+async openAlert(cabecera: string, msg: string, iconName: string) {
+  const alert = await this.alert.create({
+    header: cabecera,
+    message: new IonicSafeString(`<ion-icon name="${iconName}" style="font-size: 2em; color: #488aff;"></ion-icon><p>${msg}</p>`),
+    buttons: ['Aceptar'],
+  });
 
-    await alert.present();
-  }
+  await alert.present();
+}
 
 }

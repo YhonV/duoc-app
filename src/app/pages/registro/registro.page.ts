@@ -107,6 +107,7 @@ export class RegistroPage implements OnInit {
           'Serás redirigido a la página de inicio de sesión.',
           true
         );
+        this.closeModal();
   
         setTimeout(() => {
           this.router.navigate(['/login']);
@@ -178,12 +179,11 @@ export class RegistroPage implements OnInit {
   }
 
   // Función para cerrar el modal
-  onModalClose() {
+  closeModal() {
     this.isModalVisible = false;
-    if (this.redirectTo) {
-      this.router.navigate([this.redirectTo]);
+    if (this.modal) {
+      this.modal.close();
     }
   }
-
 
 }
