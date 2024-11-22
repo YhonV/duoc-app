@@ -15,7 +15,7 @@ import { provideHttpClient } from '@angular/common/http';
   declarations: [AppComponent],
   imports: [
     BrowserModule, 
-    IonicModule.forRoot(), 
+    IonicModule.forRoot({ innerHTMLTemplatesEnabled: true}), 
     AppRoutingModule,
     QRCodeModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),

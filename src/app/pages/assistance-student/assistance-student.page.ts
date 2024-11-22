@@ -50,14 +50,14 @@ export class AssistanceStudentPage implements OnInit {
         const datos = JSON.parse(scanR.code!);
         const resultadoMarcar = await this.utilService.post<{ success: boolean }>('https://pgy4121serverlessapi.vercel.app/api/asistencia/qr', datos);
         spin.dismiss(); 
-          this.openModal('Resultado', 'Asistencia registrada correctamente', 'assets/icon/check.png', 'Gracias por preferirnos :D', true);
+        this.utilService.openAlert('Asistencia registrada correctamente', 'Gracias por preferirnos :D', 'checkmark-circle');
       } catch (error: any) {
         spin.dismiss();
         console.log('error', error);
         if (error instanceof HttpErrorResponse) {
-          this.openModal('Error', 'Clase ya registrada, intenta con un nuevo código QR por favor.', 'assets/icon/error.jpg', 'Gracias por preferirnos :D', true);
+          this.utilService.openAlert('Error', error.error.message, 'alert-circle');
         } else {
-          this.openModal('Error', 'Error al registrar la asistencia', 'assets/icon/error.jpg', 'Por favor, intente nuevamente', true);
+          this.utilService.openAlert('Error', 'Ocurrió un error inesperado', 'alert-circle');
         }
       }
     }
@@ -195,6 +195,6 @@ onModalClose() {
 }
 
   presentAler(){
-    this.utilService.openAlert('Atencion', 'Mensaje recibido exitosamente');
+    this.utilService.openAlert('Error', 'Ocurrió un error inesperado', 'assets/icon/error.jpg');
   }   
 }
