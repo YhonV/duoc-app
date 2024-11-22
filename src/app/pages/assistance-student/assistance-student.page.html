@@ -10,11 +10,9 @@
     </div>
     <app-accordion [data]="filteredTableData" [showQRColumn]="false"></app-accordion>
     <div class="scan-button-container">
-      <!-- <ion-button (click)="startScanner()" class="scan-button" expand="block" color="secondary">
-        Escanear código QR
-      </ion-button> -->
-      <ion-button (click)="startScannerWeb()" expand="block" class="scan-button"  fill="outline" color="secondary">
-        Selecciona un código QR
+      <ion-button (click)="startScannerWeb()" expand="block" class="scan-button"  fill="outline" color="primary">          
+        <ion-icon name="scan-outline" slot="end"></ion-icon>
+        Registra tu asistencia
       </ion-button>
     </div>
   </div>

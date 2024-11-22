@@ -26,7 +26,6 @@ export class ProfilePage implements OnInit {
     try {
       const { value } = await Preferences.get({ key: 'userDoc' });
       const userDoc = value ? JSON.parse(value) : null;
-      console.log('userDoc:', userDoc);
       if( userDoc ){
         this.name = userDoc.username;
         this.email = userDoc.email;

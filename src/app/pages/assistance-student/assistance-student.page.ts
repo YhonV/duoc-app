@@ -44,19 +44,20 @@ export class AssistanceStudentPage implements OnInit {
   async startScannerWeb() {
     const spin = await this.utilService.loading();
     const scanR = await BarcodeScanner.scan();
+    console.log('scanR', scanR);
     if (scanR.result) {
       try {
         const datos = JSON.parse(scanR.code!);
         const resultadoMarcar = await this.utilService.post<{ success: boolean }>('https://pgy4121serverlessapi.vercel.app/api/asistencia/qr', datos);
-        spin.dismiss();
-        await this.utilService.mensaje('Resultado:' + resultadoMarcar.success);
+        spin.dismiss(); 
+          this.openModal('Resultado', 'Asistencia registrada correctamente', 'assets/icon/check.png', 'Gracias por preferirnos :D', true);
       } catch (error: any) {
         spin.dismiss();
         console.log('error', error);
         if (error instanceof HttpErrorResponse) {
-          this.utilService.mensaje(error.error.message);
+          this.openModal('Error', 'Clase ya registrada, intenta con un nuevo código QR por favor.', 'assets/icon/error.jpg', 'Gracias por preferirnos :D', true);
         } else {
-          this.utilService.mensaje('Error registrar' + error);
+          this.openModal('Error', 'Error al registrar la asistencia', 'assets/icon/error.jpg', 'Por favor, intente nuevamente', true);
         }
       }
     }
@@ -64,6 +65,7 @@ export class AssistanceStudentPage implements OnInit {
 
   // ========= Tabla de asistencias ========= //
   tableData = [
+    
     { title: 'ARQUITECTURA ASY4131', clase: 'ARQUITECTURA ASY4131', seccion: '003V', qr: '', sala: 'Sala 101', horario: 'Lunes 10:00 - 12:00', esTransversal: false },
     { title: 'CALIDAD DE SOFTWARE CSY4111', clase: 'CALIDAD DE SOFTWARE CSY4111', seccion: 'ASY4131-004V', qr: '', sala: 'Sala 102', horario: 'Martes 10:00 - 12:00', esTransversal: false },
     { title: 'ESTADISTICA DESCRIPTIVA MAT4140', clase: 'ESTADISTICA DESCRIPTIVA MAT4140', seccion: '004V', qr: '', sala: 'Sala 303', horario: 'Miércoles 10:00 - 12:00', esTransversal: false },
@@ -147,36 +149,48 @@ export class AssistanceStudentPage implements OnInit {
   // ============== Metodos para el modal ============== //
   // Función para abrir el modal con los datos adecuados
   openModal(title: string, content: string, image: string, description: string, autoClose: boolean) {
+    // Reiniciar el estado del modal
+    this.isModalVisible = false;
+    
+    // Establecer nuevos valores
     this.title = title;
     this.content = content;
     this.image = image;
     this.description = description;
     this.autoClose = autoClose;
-    this.isModalVisible = true;
-
+    
+    // Pequeño delay para asegurar que el estado se haya reiniciado
     setTimeout(() => {
+      this.isModalVisible = true;
       if (this.modal) {
         this.modal.open();
       } else {
         console.error('Modal component not found');
       }
-    });
-
-    if (autoClose) {
-      setTimeout(() => {
-        this.isModalVisible = false;
-        if (this.redirectTo) {
-          this.router.navigate([this.redirectTo]);
-        }
-      }, 3000);
-    }
+  
+      if (autoClose) {
+        setTimeout(() => {
+          this.closeModal();
+        }, 3000);
+      }
+    }, 100);
   }
-
-  // Función para cerrar el modal
-  onModalClose() {
-    this.isModalVisible = false;
-    if (this.redirectTo) {
-      this.router.navigate([this.redirectTo]);
-    }
+  // Nuevo método para cerrar el modal
+closeModal() {
+  this.isModalVisible = false;
+  this.title = '';
+  this.content = '';
+  this.image = '';
+  this.description = '';
+  this.autoClose = false;
+  
+  if (this.redirectTo) {
+    this.router.navigate([this.redirectTo]);
   }
+}
+
+// Actualizar onModalClose para usar closeModal
+onModalClose() {
+  this.closeModal();
+}
 }

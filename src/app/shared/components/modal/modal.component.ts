@@ -70,7 +70,9 @@ export class ModalComponent {
   }
 
   dismiss() {
-    this.modal.dismiss();
+    this.modal.dismiss().then(() => {
+      this.isOpen = false;
+    });
   }
 
   open() {

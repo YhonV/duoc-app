@@ -67,7 +67,6 @@ async mensaje(texto:string){
   await m.onDidDismiss();
 }
 
-async go(url:string,noVolver = false){
-  return this.nav.navigateForward(url,{replaceUrl:noVolver});
-}
+  async openAlert(){}
+
 }
