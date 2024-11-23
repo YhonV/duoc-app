@@ -6,7 +6,6 @@ import { firebaseErrors } from 'src/app/config/constants';
 import { User } from 'src/app/models/user.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilService } from 'src/app/services/utils.service';
-import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 
 @Component({
   selector: 'app-registro',
@@ -14,7 +13,6 @@ import { ModalComponent } from 'src/app/shared/components/modal/modal.component'
   styleUrls: ['./registro.page.scss'],
 })
 export class RegistroPage implements OnInit {
-  @ViewChild(ModalComponent) modal!: ModalComponent;
 
   firebaseService = inject(FirebaseService);
   utilService = inject(UtilService);
@@ -105,7 +103,7 @@ export class RegistroPage implements OnInit {
         if (error instanceof FirebaseError) {
           message = firebaseErrors[error.code] || message;
         }
-        
+        this.utilService.openAlert(message, '', 'close-circle');
       }
     }
   }

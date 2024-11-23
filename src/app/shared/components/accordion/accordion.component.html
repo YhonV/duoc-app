@@ -11,7 +11,7 @@
       <p><strong>Sección:</strong> {{ row.seccion }}</p>
       <p><strong>Sala:</strong> {{ row.sala }}</p>
       <p><strong>Horario:</strong> {{ row.horario }}</p>
-      <ion-button *ngIf="showQRColumn" (click)="openQRModal(row)" expand="block" fill="outline">
+      <ion-button *ngIf="showQRColumn" expand="block" fill="outline">
         <ion-icon name="qr-code-outline" slot="start"></ion-icon>
         Generar QR
       </ion-button>
@@ -22,13 +22,3 @@
     </div>
   </ion-accordion>
 </ion-accordion-group>
-
-<!-- Modal Component -->
-<app-modal 
-  #modal 
-  [image]="selectedQRImage" 
-  [title]="selectedClass"
-  [content]="warning"
-  [trigger]="'open-modal'"
-  >
-</app-modal>

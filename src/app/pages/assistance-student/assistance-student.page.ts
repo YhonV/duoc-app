@@ -4,7 +4,6 @@ import { Seccion } from 'src/app/models/asistencia.model';
 import { User } from 'src/app/models/user.model';
 import { Historial } from 'src/app/models/historial.model';
 import { Preferences } from '@capacitor/preferences';
-import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { Router } from '@angular/router';
 import { UtilService } from 'src/app/services/utils.service';
 import { BarcodeScanner } from 'capacitor-barcode-scanner';
@@ -16,13 +15,6 @@ import { BarcodeScanner } from 'capacitor-barcode-scanner';
 })
 export class AssistanceStudentPage implements OnInit {
 
-  @ViewChild(ModalComponent) modal!: ModalComponent;
-  isModalVisible: boolean = false;
-  title: string = '';
-  content: string = '';
-  image: string = '';
-  description: string = '';
-  autoClose: boolean = false;
   user = {} as User;
   isSupported = false;
   scanResult = '';
