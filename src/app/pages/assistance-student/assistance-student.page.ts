@@ -2,8 +2,8 @@ import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Seccion } from 'src/app/models/asistencia.model';
 import { User } from 'src/app/models/user.model';
+import { Historial } from 'src/app/models/historial.model';
 import { Preferences } from '@capacitor/preferences';
-import { FirebaseAuthentication } from '@capacitor-firebase/authentication';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { Router } from '@angular/router';
 import { UtilService } from 'src/app/services/utils.service';
@@ -29,6 +29,7 @@ export class AssistanceStudentPage implements OnInit {
   mostrarTransversales = false;
   redirectTo: string = '';
   utilService = inject(UtilService)
+  historial: Historial[] = [];
 
   constructor(
     private http: HttpClient,
@@ -77,22 +78,20 @@ export class AssistanceStudentPage implements OnInit {
 
   async listarAsistencias() {
     try {
-      // Define el tipo de la respuesta como un arreglo de `Seccion`
+      
       const lista = await this.utilService.get<Seccion[]>('https://pgy4121serverlessapi.vercel.app/api/asistencia/listar');
       
-      // Devuelve la lista si necesitas usarla en otro lugar
+      const secciones =['ASY4131', 'CSY4111', 'MAT4140', 'PGY4122', 'EAY4450', 'PY41447', 'INI5111'];
+      const filteredSecciones = lista.filter(seccion => secciones.includes(seccion.seccion));
 
-      lista.forEach(seccion => {
-        console.log(`Sección: ${seccion.seccion === 'PruebaYhonv2'}`);
+      filteredSecciones.forEach(seccion =>{
         seccion.asistencia.forEach(asistencia => {
-          console.log(`Clase ID: ${asistencia.claseId}`);
-          console.log(`Fecha: ${asistencia.fecha}`);
-          console.log(`Asistido: ${asistencia.asistido}`);
-          console.log(`Fecha/Hora: ${asistencia.fechaHora}`);
+          this.historial.push({ seccion: seccion.seccion, asistencia: asistencia.asistido, fecha: asistencia.fecha });
+          
         });
-      });
+      })
+      console.log('historial', this.historial);
 
-      return lista;
     } catch (error) {
       console.error('Error al listar asistencias:', error);
       throw error; // Manejo del error para el llamador
@@ -112,4 +111,9 @@ export class AssistanceStudentPage implements OnInit {
     this.mostrarTransversales = event.detail.checked;
   }
 
+    isModalOpen = false;
+  
+    setOpen(isOpen: boolean) {
+      this.isModalOpen = isOpen;
+    }
 }

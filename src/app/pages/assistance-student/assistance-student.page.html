@@ -31,3 +31,29 @@
 [autoClose]="autoClose"
 [redirectTo]="redirectTo"
 ></app-modal>
+
+
+
+  <ion-button expand="block" (click)="setOpen(true)">Open</ion-button>
+  <ion-modal [isOpen]="isModalOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Modal</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="setOpen(false)">Close</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <p>
+          <ion-item *ngFor="let item of historial">
+            <ion-label>{{ item.seccion }}</ion-label>
+            <ion-label>{{ item.asistencia }}</ion-label>
+            <ion-label>{{ item.fecha }}</ion-label>
+          </ion-item>
+        
+        </p>
+      </ion-content>
+    </ng-template>
+  </ion-modal>

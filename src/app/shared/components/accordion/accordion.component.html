@@ -15,11 +15,7 @@
         <ion-icon name="qr-code-outline" slot="start"></ion-icon>
         Generar QR
       </ion-button>
-      <!-- <ion-button id="scan-button" expand="block" fill="outline" class="custom-button scan-button">
-        <ion-icon name="qr-code-outline" slot="start"></ion-icon>
-        Escanear QR
-      </ion-button> -->
-      <ion-button *ngIf="allAsistance" (click)="openAttendanceModal(row)" expand="block" fill="outline" class="custom-button attendance-button">
+      <ion-button *ngIf="allAsistance" (click)="setOpen(true)" expand="block" fill="outline" class="custom-button attendance-button">
         <ion-icon name="stats-chart-outline" slot="start"></ion-icon>
         Asistencias
       </ion-button>

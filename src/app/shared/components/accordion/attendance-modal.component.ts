@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-
+import { AssistanceStudentPage } from 'src/app/pages/assistance-student/assistance-student.page';
 interface AttendanceRecord {
   date: string;
   present: boolean;
@@ -124,5 +124,7 @@ export class AttendanceModalComponent {
     const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: 'long'};
     return new Date(date).toLocaleDateString('es-ES', options);
   }
+
+
 
 }

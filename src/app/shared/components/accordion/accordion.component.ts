@@ -2,6 +2,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ModalComponent } from '../modal/modal.component';
 import { AlertController, ModalController } from '@ionic/angular';
 import { AttendanceModalComponent } from './attendance-modal.component';
+import { AssistanceStudentPage } from 'src/app/pages/assistance-student/assistance-student.page';
 
 interface TableData {
   title: string;
@@ -28,7 +29,9 @@ export class AccordionComponent implements OnInit {
   scanResult = '';
   selectedClass: string = '';
   selectedQRImage: string = '';
-
+  isModalOpen = false;
+  assistance: AssistanceStudentPage;
+  
   constructor(
     private modalController: ModalController,
     private alertController: AlertController
@@ -45,33 +48,8 @@ export class AccordionComponent implements OnInit {
     this.modal.modal.present();
   }  
 
-  async openAttendanceModal(row: TableData) {
-    console.log('openAttendanceModal');
-    const modal = await this.modalController.create({
-      component: AttendanceModalComponent,
-      componentProps: {
-        attendanceRecords: [
-          { date: '2024-08-15',  present: true, justified: false, absent: false },
-          { date: '2024-08-16',  present: false, justified: false, absent: true },
-          { date: '2024-08-19',  present: true, justified: false, absent: false },
-          { date: '2024-08-19',  present: false, justified: false, absent: true },
-          { date: '2024-08-20',  present: true, justified: false, absent: false },
-          { date: '2024-08-20',  present: true, justified: false, absent: false },
-          { date: '2024-08-21',  present: false, justified: false, absent: true },
-          { date: '2024-08-19',  present: true, justified: false, absent: false },
-          { date: '2024-08-20',  present: true, justified: false, absent: false },
-          { date: '2024-08-21',  present: false, justified: true, absent: false },
-          { date: '2024-08-22',  present: true, justified: false, absent: false },
-          { date: '2024-08-23',  present: false, justified: true, absent: false },
-          { date: '2024-08-25',  present: true, justified: false, absent: false },
-          { date: '2024-08-25',  present: true, justified: false, absent: false },
-          { date: '2024-08-26',  present: true, justified: false, absent: false },
-          { date: '2024-08-27',  present: false, justified: false, absent: true },
-        ]
-      },
-      cssClass: 'attendance-modal'
-    });
-    await modal.present();
+  setOpen(isOpen: boolean) {
+    this.isModalOpen = isOpen;
   }
 
 }
