@@ -3,6 +3,12 @@
   <app-toolbar></app-toolbar>
   <app-logo class="d-flex-center"></app-logo>
   <div class="content-container">
-    <app-accordion [data]="tableData" [showQRColumn]="false" [showScanQR]="false" [allAsistance]="false"></app-accordion>
+    <app-accordion 
+    [data]="tableData" 
+    [showQRColumn]="false" 
+    [showScanQR]="false" 
+    [allAsistance]="false"
+    [showAttendanceButton]="false">
+</app-accordion>
   </div>
 </ion-content>

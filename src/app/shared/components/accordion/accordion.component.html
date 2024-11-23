@@ -7,18 +7,79 @@
       </div>
     </ion-item>
     <div class="ion-padding accordion-content" slot="content">
-      <p><strong>Clase:</strong> {{ row.clase }}</p>
+      <p><strong>Sigla Asignatura:</strong> {{ row.clase }}</p>
       <p><strong>Sección:</strong> {{ row.seccion }}</p>
       <p><strong>Sala:</strong> {{ row.sala }}</p>
       <p><strong>Horario:</strong> {{ row.horario }}</p>
-      <ion-button *ngIf="showQRColumn" expand="block" fill="outline">
+      <ion-button 
+      *ngIf="showQRColumn" 
+      expand="block" fill="outline">
         <ion-icon name="qr-code-outline" slot="start"></ion-icon>
         Generar QR
       </ion-button>
-      <ion-button *ngIf="allAsistance" (click)="setOpen(true)" expand="block" fill="outline" class="custom-button attendance-button">
-        <ion-icon name="stats-chart-outline" slot="start"></ion-icon>
-        Asistencias
-      </ion-button>
-    </div>
-  </ion-accordion>
-</ion-accordion-group>
+
+      <ion-button 
+      *ngIf="showAttendanceButton" 
+      fill="outline" 
+      class="custom-button attendance-button" 
+      expand="block" 
+      (click)="listarAsistencias(row.clase)">
+      <ion-icon name="stats-chart-outline" slot="start"></ion-icon>
+      Asistencias
+    </ion-button>
+      
+      <ion-modal [isOpen]="isModalOpen">
+        <ng-template>
+          <ion-header>
+            <ion-toolbar color="primary">
+              <ion-title>Historial de Asistencias</ion-title>
+              <ion-buttons slot="end">
+                <ion-button (click)="setOpen(false)">
+                  <ion-icon name="close-outline"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+      
+          <ion-content class="ion-padding">
+            <!-- Encabezado de la tabla -->
+            <ion-grid class="header-row">
+              <ion-row>
+                <ion-col size="4">
+                  <strong>Sigla Asignatura</strong>
+                </ion-col>
+                <ion-col size="4" class="ion-text-center">
+                  <strong>Asistencia</strong>
+                </ion-col>
+                <ion-col size="4" class="ion-text-end">
+                  <strong>Fecha</strong>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+      
+            <!-- Contenido de la tabla -->
+            <ion-grid class="data-rows">
+              <ion-row *ngFor="let item of historial" class="ion-align-items-center">
+                <ion-col size="4">
+                  {{ item.seccion }}
+                </ion-col>
+                <ion-col size="4" class="ion-text-center">
+                  <ion-badge [color]="item.asistencia ? 'success' : 'danger'">
+                    {{ item.asistencia ? 'Presente' : 'Ausente' }}
+                  </ion-badge>
+                </ion-col>
+                <ion-col size="4" class="ion-text-end">
+                  {{ transformarFecha(item.fecha) | date:'dd/MM/yyyy' }}
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+      
+            <!-- Mensaje si no hay datos -->
+            <div *ngIf="historial?.length === 0" class="ion-text-center ion-padding">
+              <ion-text color="medium">
+                No hay registros de asistencia disponibles
+              </ion-text>
+            </div>
+          </ion-content>
+        </ng-template>
+      </ion-modal>

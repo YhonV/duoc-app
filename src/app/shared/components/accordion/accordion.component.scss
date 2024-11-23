@@ -89,3 +89,28 @@ ion-accordion.accordion-expanded .header-icon {
   display: table;
   clear: both;
 }
+
+.header-row {
+  background: #f4f5f8;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.data-rows ion-row {
+  border-bottom: 1px solid #e0e0e0;
+  padding: 12px 0;
+}
+
+.data-rows ion-row:last-child {
+  border-bottom: none;
+}
+
+ion-badge {
+  padding: 8px 12px;
+  border-radius: 15px;
+}
+
+.attendance-button {
+  margin: 10px 0;
+}

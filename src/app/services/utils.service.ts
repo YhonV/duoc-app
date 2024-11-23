@@ -29,8 +29,6 @@ export class UtilService {
     });
   };
 
-  
-
   loading(){
     return this.loadingCtrl.create({
       message: 'Cargando...',

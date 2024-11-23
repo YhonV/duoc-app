@@ -29,6 +29,7 @@ export class FirebaseService {
         const userDoc = await this.getDocument(`users/${user.uid}`);
         this.userDataSubject.next(userDoc);
         await Preferences.set({ key: 'user', value: JSON.stringify(userDoc) });
+        console.log('Usuario sigue logueado:', userDoc);
         console.log(`User logged: ${user.displayName}`);
         console.log(this.role);
       } else {
