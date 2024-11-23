@@ -5,7 +5,6 @@ import { CustomInputsComponent } from './components/custom-inputs/custom-inputs.
 import { LogoComponent } from './components/logo/logo.component';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ModalComponent } from './components/modal/modal.component';
 import { AccordionComponent } from './components/accordion/accordion.component';
 import { QRCodeModule } from 'angularx-qrcode';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
@@ -18,7 +17,6 @@ import { AttendanceModalComponent } from './components/accordion/attendance-moda
     [HeaderComponent,
     CustomInputsComponent,
     LogoComponent,
-    ModalComponent,
     AccordionComponent,
     ToolbarComponent,
     AttendanceModalComponent
@@ -28,7 +26,6 @@ import { AttendanceModalComponent } from './components/accordion/attendance-moda
     CustomInputsComponent,
     ReactiveFormsModule,
     LogoComponent,
-    ModalComponent,
     AccordionComponent,
     ToolbarComponent,
     AttendanceModalComponent
