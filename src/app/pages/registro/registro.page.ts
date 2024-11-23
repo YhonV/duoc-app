@@ -15,13 +15,6 @@ import { ModalComponent } from 'src/app/shared/components/modal/modal.component'
 })
 export class RegistroPage implements OnInit {
   @ViewChild(ModalComponent) modal!: ModalComponent;
-  isModalVisible: boolean = false;
-  title: string = '';
-  content: string = '';
-  image: string = '';
-  description: string = '';
-  autoClose: boolean = false;
-  redirectTo: string = '';
 
   firebaseService = inject(FirebaseService);
   utilService = inject(UtilService);
@@ -100,14 +93,7 @@ export class RegistroPage implements OnInit {
         this.setUserToFirestore(uid);
 
         await loading.dismiss();
-        this.openModal(
-          'Registro exitoso',
-          'Tu cuenta ha sido creada exitosamente',
-          'assets/icon/check.png',
-          'Serás redirigido a la página de inicio de sesión.',
-          true
-        );
-        this.closeModal();
+        this.utilService.openAlert('Usuario registrado exitosamente', '', 'checkmark-circle');
   
         setTimeout(() => {
           this.router.navigate(['/login']);
@@ -119,13 +105,7 @@ export class RegistroPage implements OnInit {
         if (error instanceof FirebaseError) {
           message = firebaseErrors[error.code] || message;
         }
-        this.openModal(
-          'Error',
-          message,
-          'assets/icon/error.jpg',
-          'Por favor, inténtalo de nuevo.',
-          true
-        );
+        
       }
     }
   }
@@ -148,42 +128,4 @@ export class RegistroPage implements OnInit {
       }
     }
   }
-
-  // ============== Metodos para el modal ============== //
-  
-  // Función para abrir el modal con los datos adecuados
-  openModal(title: string, content: string, image: string, description: string, autoClose: boolean) {
-    this.title = title;
-    this.content = content;
-    this.image = image;
-    this.description = description;
-    this.autoClose = autoClose;
-    this.isModalVisible = true;
-    
-    setTimeout(() => {
-      if (this.modal) {
-        this.modal.open();
-      } else {
-        console.error('Modal component not found');
-      }
-    });
-
-    if (autoClose) {
-      setTimeout(() => {
-        this.isModalVisible = false;
-        if (this.redirectTo) {
-          this.router.navigate([this.redirectTo]);
-        }
-      }, 3000);
-    }
-  }
-
-  // Función para cerrar el modal
-  closeModal() {
-    this.isModalVisible = false;
-    if (this.modal) {
-      this.modal.close();
-    }
-  }
-
 }

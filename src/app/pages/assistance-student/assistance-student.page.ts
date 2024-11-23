@@ -48,6 +48,7 @@ export class AssistanceStudentPage implements OnInit {
     console.log('scanR', scanR);
     if (scanR.result) {
       try {
+        console.log('Entró al try');
         const datos = JSON.parse(scanR.code!);
         const resultadoMarcar = await this.utilService.post<{ success: boolean }>('https://pgy4121serverlessapi.vercel.app/api/asistencia/qr', datos);
         spin.dismiss(); 
