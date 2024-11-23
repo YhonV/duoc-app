@@ -37,9 +37,25 @@ export class AssistanceStudentPage implements OnInit {
   ) { }
 
   async ngOnInit() {
-    const userResult = await Preferences.get({ key: 'userDoc' });
-    this.user = userResult.value ? JSON.parse(userResult.value) as User : {} as User;
+    try {
+      // Recuperar usuario logeado
+      const userResult = await Preferences.get({ key: 'user' }); // Cambiado de userDoc a user
+      this.user = userResult.value ? JSON.parse(userResult.value) as User : {} as User;
+  
+      if (this.user && this.user.uid) {
+        // Recuperar historial específico para el usuario
+        const userKey = `historialAsistencias_${this.user.uid}`;
+        const historialResult = await Preferences.get({ key: userKey });
+        this.historial = historialResult.value ? JSON.parse(historialResult.value) : [];
+        console.log(`Historial recuperado para el usuario ${this.user.uid}:`, this.historial);
+      } else {
+        console.warn('No se encontró información del usuario logeado.');
+      }
+    } catch (error) {
+      console.error('Error al inicializar:', error);
+    }
   }
+  
 
   // Método para escanear QR en la versión web
   async startScannerWeb() {
@@ -77,27 +93,52 @@ export class AssistanceStudentPage implements OnInit {
     { title: 'INGLES INTERMEDIO INI5111', clase: 'INGLES INTERMEDIO INI5111', seccion: '008V', qr: '', sala: 'Sala 105', horario: 'Martes 13:00 - 15:00', esTransversal: true }
   ];
 
+  
+
   async listarAsistencias() {
     try {
-      
       const lista = await this.utilService.get<Seccion[]>('https://pgy4121serverlessapi.vercel.app/api/asistencia/listar');
-      
-      const secciones =['ASY4131', 'CSY4111', 'MAT4140', 'PGY4122', 'EAY4450', 'PY41447', 'INI5111'];
+      const secciones = ['ASY4131', 'CSY4111', 'MAT4140', 'PGY4122', 'EAY4450', 'PY41447', 'INI5111'];
       const filteredSecciones = lista.filter(seccion => secciones.includes(seccion.seccion));
-
-      filteredSecciones.forEach(seccion =>{
+  
+      this.historial = [];
+      filteredSecciones.forEach(seccion => {
         seccion.asistencia.forEach(asistencia => {
-          this.historial.push({ seccion: seccion.seccion, asistencia: asistencia.asistido, fecha: asistencia.fecha });
-          
+          this.historial.push({
+            seccion: seccion.seccion,
+            asistencia: asistencia.asistido,
+            fecha: asistencia.fecha
+          });
         });
-      })
-      console.log('historial', this.historial);
-
+      });
+  
+      console.log('Historial construido:', this.historial);
+  
+      // Recuperar el ID único del usuario logeado
+      const userResult = await Preferences.get({ key: 'user' }); // Cambiado de userDoc a user
+      const user = userResult.value ? JSON.parse(userResult.value) as User : null;
+  
+      if (!user || !user.uid) {
+        throw new Error('No se pudo identificar al usuario logeado.');
+      }
+  
+      // Guardar historial asociado al usuario en Preferences
+      const userKey = `historialAsistencias_${user.uid}`;
+      await Preferences.set({
+        key: userKey,
+        value: JSON.stringify(this.historial)
+      });
+  
+      console.log(`Historial guardado en Preferences para el usuario: ${user.uid}`);
     } catch (error) {
       console.error('Error al listar asistencias:', error);
-      throw error; // Manejo del error para el llamador
+      throw error;
     }
   }
+  
+  
+  
+
   
 
   // ========= Materias transversales (Toggle) ========= //
