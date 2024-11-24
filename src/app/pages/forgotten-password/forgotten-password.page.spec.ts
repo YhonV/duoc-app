@@ -12,6 +12,8 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 describe('ForgottenPasswordPage', () => {
   let component: ForgottenPasswordPage;
   let fixture: ComponentFixture<ForgottenPasswordPage>;
+  let utilService: UtilService;
+  let firebaseService: FirebaseService;
 
   beforeEach( async () => {
       await TestBed.configureTestingModule({

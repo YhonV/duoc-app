@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from 'src/environments/environment.prod';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('RegistroPage', () => {
   let component: RegistroPage;
@@ -19,7 +20,8 @@ describe('RegistroPage', () => {
       imports: [IonicModule.forRoot(),
                 ReactiveFormsModule,
                 AngularFireModule.initializeApp(environment.firebaseConfig),
-                HttpClientModule],
+                HttpClientModule,
+                RouterTestingModule],
       providers: [FirebaseService, UtilService, Router]
     }).compileComponents();
 
