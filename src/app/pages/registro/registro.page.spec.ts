@@ -46,4 +46,18 @@ describe('RegistroPage', () => {
     let result = validatorFn(control);
     expect(result).toEqual({ rutInvalido: true }); 
   })
+
+  it('should validarPass', () => {
+    const validatorFn: ValidatorFn = component.validarPass;
+    let control = new FormControl('123456');
+    let result: ValidationErrors | null = validatorFn(control);
+    expect(result).toBeNull(); 
+  });
+
+  it('should validarPhone', () => {
+    const validatorFn: ValidatorFn = component.validarPhone();
+    let control = new FormControl('123456789');
+    let result: ValidationErrors | null = validatorFn(control);
+    expect(result).toBeNull();
+  })
 });
