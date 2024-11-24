@@ -1,10 +1,9 @@
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Component, OnInit, } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Seccion } from 'src/app/models/asistencia.model';
 import { User } from 'src/app/models/user.model';
 import { Historial } from 'src/app/models/historial.model';
 import { Preferences } from '@capacitor/preferences';
-import { Router } from '@angular/router';
 import { UtilService } from 'src/app/services/utils.service';
 import { BarcodeScanner } from 'capacitor-barcode-scanner';
 
@@ -14,18 +13,12 @@ import { BarcodeScanner } from 'capacitor-barcode-scanner';
   styleUrls: ['./assistance-student.page.scss'],
 })
 export class AssistanceStudentPage implements OnInit {
-
   user = {} as User;
-  isSupported = false;
-  scanResult = '';
   mostrarTransversales = false;
-  redirectTo: string = '';
-  utilService = inject(UtilService)
   historial: Historial[] = [];
 
   constructor(
-    private http: HttpClient,
-    private router: Router,
+    private utilService: UtilService,
   ) { }
 
   async ngOnInit() {
@@ -53,20 +46,23 @@ export class AssistanceStudentPage implements OnInit {
   async startScannerWeb() { 
     const loading = await this.utilService.loading();
     const scanR = await BarcodeScanner.scan();
-    console.log('scanR', scanR);
     if (scanR.result) {
       try {
         await loading.present();
         console.log('Entró al try');
         const datos = JSON.parse(scanR.code!);
         const resultadoMarcar = await this.utilService.post<{ success: boolean }>('https://pgy4121serverlessapi.vercel.app/api/asistencia/qr', datos);
-        loading.dismiss(); 
+        loading.dismiss();
         this.utilService.openAlert('Asistencia registrada correctamente', 'Gracias por preferirnos :D', 'checkmark-circle');
       } catch (error: any) {
         loading.dismiss();
         console.log('error', error);
         if (error instanceof HttpErrorResponse) {
-          this.utilService.openAlert('Error', error.error.message, 'alert-circle');
+          if (error.status === 404) {
+            this.utilService.openAlert('Error', 'Código QR ha caducado, intente con otro nuevamente.', 'alert-circle');
+          } else {
+            this.utilService.openAlert('Error', error.error.message, 'alert-circle');
+          }
         } else {
           this.utilService.openAlert('Error', 'Ocurrió un error inesperado', 'alert-circle');
         }
@@ -76,7 +72,6 @@ export class AssistanceStudentPage implements OnInit {
 
   // ========= Tabla de asistencias ========= //
   tableData = [
-    
     { title: 'ARQUITECTURA ASY4131', clase: 'ASY4131', seccion: '003V', qr: '', sala: 'Sala 101', horario: 'Lunes 10:00 - 12:00', esTransversal: false },
     { title: 'CALIDAD DE SOFTWARE CSY4111', clase: 'CSY4111', seccion: 'ASY4131-004V', qr: '', sala: 'Sala 102', horario: 'Martes 10:00 - 12:00', esTransversal: false },
     { title: 'ESTADISTICA DESCRIPTIVA MAT4140', clase: 'MAT4140', seccion: '004V', qr: '', sala: 'Sala 303', horario: 'Miércoles 10:00 - 12:00', esTransversal: false },
