@@ -27,7 +27,7 @@ export class ProfilePage implements OnInit {
       const { value } = await Preferences.get({ key: 'userDoc' });
       const userDoc = value ? JSON.parse(value) : null;
       if( userDoc ){
-        this.name = userDoc.username;
+        this.name = userDoc.name;
         this.email = userDoc.email;
         this.phone = userDoc.phone;
         this.rut = userDoc.rut;
@@ -41,9 +41,5 @@ export class ProfilePage implements OnInit {
     const dataUrl = (await this.utilService.takePicture('Imagen de perfil')).dataUrl;
     this.image = dataUrl;
   }
-
-  
-
-  
 
 }
