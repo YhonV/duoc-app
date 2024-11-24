@@ -35,7 +35,7 @@ describe('LoginPage', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Formulario válido en método OnSubmit', async () => {
+  it('should form válido en método OnSubmit', async () => {
     const email = 'dahori.10@gmail.com';
     const password = '123456';
     component.form.controls['email'].setValue(email);
@@ -43,12 +43,12 @@ describe('LoginPage', () => {
     expect(component.form.valid).toBeTruthy();
   });
 
-  it('Formulario inválido en método OnSubmit', async () => {
+  it('should form inválido en método OnSubmit', async () => {
     const email = 'dahori.10gmail.com';
     const password = '1234';
     component.form.controls['email'].setValue(email);
     component.form.controls['password'].setValue(password);
-    expect(component.form.valid).toBeFalsy();
+    expect(component.form.valid).toBeFalse();
   });
     
 });

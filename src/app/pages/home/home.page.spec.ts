@@ -10,10 +10,13 @@ describe('HomePage', () => {
   let component: HomePage;
   let fixture: ComponentFixture<HomePage>;
 
+
   beforeEach( async () => {
     await TestBed.configureTestingModule({
       declarations: [ HomePage ],
-      imports: [IonicModule.forRoot(), HttpClientModule, AngularFireModule.initializeApp(environment.firebaseConfig)],
+      imports: [IonicModule.forRoot(),
+                HttpClientModule, 
+                AngularFireModule.initializeApp(environment.firebaseConfig)],
       providers: [ FirebaseService]
     }).compileComponents();
     fixture = TestBed.createComponent(HomePage);

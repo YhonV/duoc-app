@@ -11,16 +11,26 @@ import { HttpClientModule } from '@angular/common/http';
 describe('ProfilePage', () => {
   let component: ProfilePage;
   let fixture: ComponentFixture<ProfilePage>;
+  let utilService: jasmine.SpyObj<UtilService>;
+
 
   beforeEach( async () => {
+    const utilServiceSpy = jasmine.createSpyObj('UtilService', ['takePicture']);
+
     await TestBed.configureTestingModule({
       declarations: [ ProfilePage ],
       imports: [IonicModule.forRoot(),
         AngularFireModule.initializeApp(environment.firebaseConfig),
         HttpClientModule
       ],
-      providers: [ FirebaseService, UtilService, Preferences]
+      providers: [
+        { provide: UtilService, useValue: utilServiceSpy },
+        FirebaseService,
+        Preferences
+      ]
     }).compileComponents();
+
+    utilService = TestBed.inject(UtilService) as jasmine.SpyObj<UtilService>;
 
     fixture = TestBed.createComponent(ProfilePage);
     component = fixture.componentInstance;
@@ -30,4 +40,15 @@ describe('ProfilePage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should takeImage', async () => {
+    const mockDataUrl = 'data:image/png;base64,testdata';
+    utilService.takePicture.and.returnValue(Promise.resolve({ dataUrl: mockDataUrl, format: 'png', saved: false }));
+
+    await component.takeImage();
+
+    expect(utilService.takePicture).toHaveBeenCalledWith('Imagen de perfil');
+    expect(component.image).toEqual(mockDataUrl);
+  });
+
 });

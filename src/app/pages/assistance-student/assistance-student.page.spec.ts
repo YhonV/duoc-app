@@ -31,4 +31,26 @@ describe('AssistanceStudentPage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should asig.transversales - true', () => {
+    const event = { detail: { checked: true } };
+    component.mostrarAsignaturas(event);
+    expect(component.mostrarTransversales).toBeTrue();
+  });
+
+  it('should asig.transversales - false', () => {
+    const event = { detail: { checked: false } };
+    component.mostrarAsignaturas(event);
+    expect(component.mostrarTransversales).toBeFalse();
+  });
+
+  it('should modal - true', () => {
+    component.setOpen(true);
+    expect(component.isModalOpen).toBeTrue();
+  });
+
+  it('should modal - false', () => {
+    component.setOpen(false);
+    expect(component.isModalOpen).toBeFalse();
+  });
 });

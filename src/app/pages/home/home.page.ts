@@ -10,7 +10,6 @@ import { FirebaseService } from 'src/app/services/firebase.service';
 })
 
 
-
 export class HomePage implements OnInit {
   currentUser: string = '';
   private userSubscription: Subscription;
@@ -18,8 +17,6 @@ export class HomePage implements OnInit {
   role : string = '';
   mesActual: number = 0;
   nombreMesActual: string = '';
-
-  
   
   festivosMesActual: Array<{ date: string; title: string }> = [];
 
