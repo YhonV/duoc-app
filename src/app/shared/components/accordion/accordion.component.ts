@@ -1,5 +1,4 @@
-import { Component, inject, Input, OnInit, ViewChild } from '@angular/core';
-import { AlertController, ModalController } from '@ionic/angular';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { AssistanceStudentPage } from 'src/app/pages/assistance-student/assistance-student.page';
 import { Historial } from 'src/app/models/historial.model';
 import { UtilService } from 'src/app/services/utils.service';
@@ -41,10 +40,7 @@ export class AccordionComponent implements OnInit {
   
   utilService = inject(UtilService)
   
-  constructor(
-    private modalController: ModalController,
-    private alertController: AlertController
-  ) {}
+  constructor() {}
 
   ngOnInit() {
   }
