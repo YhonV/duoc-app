@@ -26,8 +26,6 @@ export class RegistroPage implements OnInit {
   validarRut(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const rut = control.value;
-      
-      // Verifica que el rut tenga un formato válido
       const esValido = /^[0-9]{7,8}-[0-9Kk]$/.test(rut);
       
       return esValido ? null : { rutInvalido: true };
@@ -91,8 +89,7 @@ export class RegistroPage implements OnInit {
         this.setUserToFirestore(uid);
 
         await loading.dismiss();
-        this.utilService.openAlert('Usuario registrado exitosamente', '', 'checkmark-circle');
-  
+        this.utilService.openAlert('Usuario registrado exitosamente', 'En unos segundos te vamos a redirigir al login', 'checkmark-circle');
         setTimeout(() => {
           this.router.navigate(['/login']);
         }, 3000); 

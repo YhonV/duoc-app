@@ -7,7 +7,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SchedulePage implements OnInit {
 
-
   tableData = [
     { title: 'Lunes ', clase: 'ARQUITECTURA ASY4131', seccion: '003V',  sala: 'Sala 101', horario: 'Lunes 10:00 - 12:00' },
     { title: 'Martes ', clase: 'CALIDAD DE SOFTWARE CSY4111', seccion: 'ASY4131-004V',  sala: 'Sala 102', horario: 'Martes 10:00 - 12:00' },
