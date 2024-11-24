@@ -1,8 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
-import { FirebaseAuthentication } from '@capacitor-firebase/authentication';
 import { Subscription } from 'rxjs';
-import { meses } from 'src/app/config/constants';
 import { FirebaseService } from 'src/app/services/firebase.service';
 
 @Component({
