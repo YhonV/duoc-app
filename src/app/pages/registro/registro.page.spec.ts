@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RegistroPage } from './registro.page';
-import { ReactiveFormsModule} from '@angular/forms';
+import { FormControl, ReactiveFormsModule, ValidationErrors, ValidatorFn} from '@angular/forms';
 import { Router } from '@angular/router';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilService } from 'src/app/services/utils.service';
@@ -31,4 +31,19 @@ describe('RegistroPage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should validarRut', () => {
+    const validatorFn: ValidatorFn = component.validarRut();
+    let control = new FormControl('12345678-9');
+    let result: ValidationErrors | null = validatorFn(control);
+    expect(result).toBeNull(); 
+  
+  });
+
+  it('should validarRut invalido', async() =>{
+    const validatorFn: ValidatorFn = component.validarRut();
+    let control = new FormControl('1234567-A');
+    let result = validatorFn(control);
+    expect(result).toEqual({ rutInvalido: true }); 
+  })
 });

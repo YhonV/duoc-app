@@ -25,4 +25,17 @@ describe('CustomTableComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should setOpen be true', () => {
+    let open = true;
+    component.setOpen(open);
+    expect(component.isModalOpen).toBeTruthy();
+  })
+
+  it('should transformarFecha', () =>{
+    let date = 20230101;
+    let result = component.transformarFecha(date);
+    let mock = new Date(2023, 0, 1);
+    expect(result).toEqual(mock);
+  })
 });

@@ -7,6 +7,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from 'src/environments/environment.prod';
 import { HttpClientModule } from '@angular/common/http';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('ForgottenPasswordPage', () => {
   let component: ForgottenPasswordPage;
@@ -16,7 +17,8 @@ describe('ForgottenPasswordPage', () => {
       await TestBed.configureTestingModule({
         declarations: [ ForgottenPasswordPage ],
         imports: [IonicModule.forRoot(), AngularFireModule.initializeApp(environment.firebaseConfig), HttpClientModule],
-        providers: [FirebaseService, UtilService, AngularFireAuth ]
+        providers: [FirebaseService, UtilService, AngularFireAuth ],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
       }).compileComponents();
 
     fixture = TestBed.createComponent(ForgottenPasswordPage);

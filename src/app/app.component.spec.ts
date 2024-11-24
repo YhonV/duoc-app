@@ -29,4 +29,32 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
+  it('should closeMenu', async () =>{
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    app.closeMenu();
+    expect(app).toBeTruthy();
+  })
+
+  it('should viewProfile', async () =>{
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    app.viewProfile();
+    expect(app).toBeTruthy();
+  })
+
+  it('should logout', async () =>{
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    app.logout();
+    expect(app).toBeTruthy();
+  })
+
+  it('should cargarFirebase', async () =>{
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    app.cargarFirebase();
+    expect(app).toBeTruthy();
+  })
+
 });
