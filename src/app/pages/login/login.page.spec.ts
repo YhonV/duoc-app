@@ -35,28 +35,20 @@ describe('LoginPage', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Funciona  OnSubmit', async () => {
+  it('Formulario válido en método OnSubmit', async () => {
     const email = 'dahori.10@gmail.com';
     const password = '123456';
     component.form.controls['email'].setValue(email);
     component.form.controls['password'].setValue(password);
     expect(component.form.valid).toBeTruthy();
+  });
 
-
-    const firebaseServiceSpy = spyOn(TestBed.inject(FirebaseService), 'signIn').and.returnValue(
-      Promise.resolve({
-        user: { 
-          uid: '123',
-          email: email,
-          displayName: null, // O el valor correspondiente si existe
-          phoneNumber: null, // O el valor correspondiente si existe
-          photoURL: null,    // O el valor correspondiente si existe
-          providerId: 'firebase',
-          // Incluye aquí cualquier otra propiedad necesaria para tu caso
-        },
-        providerId: 'firebase',
-        operationType: 'signIn', // Puede ser 'signIn' o lo que corresponda
-      } as UserCredential) // Esto asegura que TypeScript lo trate como un `UserCredential`
-    );
-    });
+  it('Formulario inválido en método OnSubmit', async () => {
+    const email = 'dahori.10gmail.com';
+    const password = '1234';
+    component.form.controls['email'].setValue(email);
+    component.form.controls['password'].setValue(password);
+    expect(component.form.valid).toBeFalsy();
+  });
+    
 });
