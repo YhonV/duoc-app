@@ -1,6 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { FirebaseError } from 'firebase/app';
 import { firebaseErrors } from 'src/app/config/constants';
 import { FirebaseService } from 'src/app/services/firebase.service';
@@ -20,7 +19,7 @@ export class ForgottenPasswordPage implements OnInit {
   firebaseService = inject(FirebaseService);
   utilService = inject(UtilService);
 
-  constructor(private router: Router) { }
+  constructor() { }
 
   ngOnInit() {
   }

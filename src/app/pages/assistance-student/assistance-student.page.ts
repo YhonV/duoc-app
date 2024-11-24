@@ -42,7 +42,7 @@ export class AssistanceStudentPage implements OnInit {
   }
   
 
-  // Método para escanear QR en la versión web
+  // Método para escanear QR 
   async startScannerWeb() { 
     const loading = await this.utilService.loading();
     const scanR = await BarcodeScanner.scan();
@@ -123,8 +123,6 @@ export class AssistanceStudentPage implements OnInit {
       throw error;
     }
   }
-  
-  
 
   // ========= Materias transversales (Toggle) ========= //
 
@@ -138,6 +136,7 @@ export class AssistanceStudentPage implements OnInit {
     this.mostrarTransversales = event.detail.checked;
   }
 
+  // ========= Modal ========= //
     isModalOpen = false;
   
     setOpen(isOpen: boolean) {
